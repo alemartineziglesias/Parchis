@@ -2,53 +2,88 @@ package juego;
 
 import java.awt.event.*;
 
-public class Controlador implements WindowListener, ActionListener {
-    private Modelo model;
-    private Vista view;
+public class Controlador implements WindowListener, ActionListener 
+{
+    private Modelo m;
+    private Vista v;
 
-    public Controlador(Modelo model, Vista view) {
-        this.model = model;
-        this.view = view;
-        this.view.addMenuListeners(this, this);
+    public Controlador(Modelo modelo, Vista vista) 
+    {
+        this.m = modelo;
+        this.v = vista;
+        v.addWindowListener(this);
+		v.jugadores.addWindowListener(this);
+		v.detallesJugadores.addWindowListener(this);
+		v.jugar.addActionListener(this);
+		v.aceptar.addActionListener(this);
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource().equals(view.jugar)) {
-            view.showJugadorDialog();
-        } else if (e.getSource().equals(view.aceptar)) {
-            view.hideJugadorDialog();
-            int numJugadores = view.getNumeroDeJugadores();
-            model.setNumeroDeJugadores(numJugadores);
-            view.showDetallesJugadores(numJugadores);
+    public void actionPerformed(ActionEvent e) 
+    {
+        if (e.getSource().equals(v.jugar)) 
+        {
+        	v.jugadores.setVisible(true);
+        } 
+        else if (e.getSource().equals(v.aceptar)) 
+        {
+        	v.jugadores.setVisible(false);
+            int numJugadores = v.getNumeroDeJugadores();
+            m.setNumeroDeJugadores(numJugadores);
+            m.showDetallesJugadores(numJugadores);
+        }
+        else if(e.getSource().equals(v.comenzar))
+        {
+        	
         }
     }
 
     @Override
-    public void windowClosing(WindowEvent e) {
-        if (e.getSource().equals(view.jugadores) && view.jugadores.isActive()) {
-            view.hideJugadorDialog();
-        } else {
+    public void windowClosing(WindowEvent e) 
+    {
+        if (v.jugadores.isActive()) 
+        {
+            v.jugadores.setVisible(false);
+        } 
+        else 
+        {
             System.exit(0);
         }
     }
 
     @Override
-    public void windowActivated(WindowEvent e) { }
+    public void windowActivated(WindowEvent e) 
+    { 
+    	
+    }
+    
     @Override
-    public void windowClosed(WindowEvent e) { }
+    public void windowClosed(WindowEvent e) 
+    {
+    	
+    }
+    
     @Override
-    public void windowDeactivated(WindowEvent e) { }
+    public void windowDeactivated(WindowEvent e) 
+    { 
+    	
+    }
+    
     @Override
-    public void windowDeiconified(WindowEvent e) { }
+    public void windowDeiconified(WindowEvent e) 
+    {
+    	
+    }
+    
     @Override
-    public void windowIconified(WindowEvent e) { }
+    public void windowIconified(WindowEvent e) 
+    { 
+    	
+    }
+    
     @Override
-    public void windowOpened(WindowEvent e) { }
-
-    public static void main(String[] args) {
-        Modelo model = new Modelo();
-        Vista view = new Vista();
-        new Controlador(model, view);
+    public void windowOpened(WindowEvent e) 
+    { 
+    	
     }
 }

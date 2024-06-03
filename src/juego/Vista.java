@@ -1,8 +1,6 @@
 package juego;
 
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowListener;
 
 import javax.swing.BoxLayout;
 
@@ -18,18 +16,22 @@ public class Vista extends Frame {
 	Choice choJugadores = new Choice();
 	Button aceptar = new Button("Aceptar");
 	Frame detallesJugadores = new Frame("Detalles de Jugadores");
+	Button comenzar = new Button("Empezar");
+	Frame juego = new Frame("Partida");
+	Image tablero;
+	
+	int numJugadores;
 
-	public Vista() {
+	public Vista() 
+	{
 		setBackground(Color.blue);
 		setLocation(550, 250);
 		setSize(300, 225);
 		setTitle("Parchís");
 		setResizable(false);
 		setLayout(new BorderLayout());
-
 		herramienta = getToolkit();
 		imagen = herramienta.getImage("logo.png");
-
 		Panel panelBotones = new Panel();
 		panelBotones.setLayout(new FlowLayout());
 		Panel botonesVertical = new Panel();
@@ -41,6 +43,7 @@ public class Vista extends Frame {
 		add(panelBotones, BorderLayout.SOUTH);
 
 		jugadores.setLayout(new GridLayout(4, 1));
+		jugadores.setLocationRelativeTo(this);
 		jugadores.setSize(200, 150);
 		jugadores.setBackground(Color.blue);
 		jugadores.add(lblJugadores);
@@ -49,47 +52,32 @@ public class Vista extends Frame {
 		choJugadores.add("4 jugadores");
 		jugadores.add(choJugadores);
 		jugadores.add(aceptar);
-
-		setVisible(true);
-	}
-
-	public void addMenuListeners(WindowListener windowListener, ActionListener actionListener) {
-		addWindowListener(windowListener);
-		jugadores.addWindowListener(windowListener);
-		detallesJugadores.addWindowListener(windowListener);
-		jugar.addActionListener(actionListener);
-		aceptar.addActionListener(actionListener);
-	}
-
-	public void showJugadorDialog() {
-		jugadores.setLocationRelativeTo(this);
-		jugadores.setVisible(true);
-	}
-
-	public void hideJugadorDialog() {
-		jugadores.setVisible(false);
-	}
-
-	public void showDetallesJugadores(int numJugadores) {
+		
 		detallesJugadores.removeAll();
 		detallesJugadores.setLayout(new GridLayout(numJugadores + 1, 2));
 		detallesJugadores.setSize(300, 50 * numJugadores);
 		detallesJugadores.setBackground(Color.blue);
-
-		for (int i = 1; i <= numJugadores; i++) {
-			detallesJugadores.add(new Label("Nombre del jugador " + i + ":"));
-			detallesJugadores.add(new TextField());
-		}
-
-		detallesJugadores.setVisible(true);
+		detallesJugadores.setLocationRelativeTo(null);
+		detallesJugadores.add(comenzar);
+		juego.setLocationRelativeTo(null);
+		juego.setSize(800, 800);
+		juego.setLayout(new FlowLayout());
+		imagen = herramienta.getImage("tablero.jpg");
+		
+		setVisible(true);
 	}
 
-	public int getNumeroDeJugadores() {
+	
+
+	public int getNumeroDeJugadores() 
+	{
 		return choJugadores.getSelectedIndex() + 2;
 	}
 
 	@Override
-	public void paint(Graphics g) {
+	public void paint(Graphics g) 
+	{
 		g.drawImage(imagen, 55, 15, this);
+		g.drawImage(tablero, 55, 15, juego);
 	}
 }
