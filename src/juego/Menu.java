@@ -25,12 +25,8 @@ public class Menu extends Frame implements WindowListener, ActionListener
 	Frame partida = new Frame("Partida");
 	Image tablero;
 
-	// Modelo (Model)
-	private int numeroDeJugadores;
-
 	public Menu() 
 	{
-		// Configuración de la vista (View)
 		setBackground(Color.blue);
 		setLocation(550, 250);
 		setSize(300, 225);
@@ -40,7 +36,7 @@ public class Menu extends Frame implements WindowListener, ActionListener
 
 		herramienta = getToolkit();
 		imagen = herramienta.getImage("logo.png");
-		imagen = herramienta.getImage("tablero.jpg");
+		tablero = herramienta.getImage("tablero.jpg");
 
 		Panel panelBotones = new Panel();
 		panelBotones.setLayout(new FlowLayout());
@@ -62,7 +58,6 @@ public class Menu extends Frame implements WindowListener, ActionListener
 		jugadores.add(choJugadores);
 		jugadores.add(aceptar);
 
-		// Añadir listeners
 		addWindowListener(this);
 		jugadores.addWindowListener(this);
 		detallesJugadores.addWindowListener(this);
@@ -78,22 +73,24 @@ public class Menu extends Frame implements WindowListener, ActionListener
 	}
 
 	@Override
-	public void paint(Graphics g) {
+	public void paint(Graphics g) 
+	{
+		super.paint(g);
 		g.drawImage(imagen, 55, 15, this);
-		g.drawImage(tablero, 55, 15, this.partida);
+		g.drawImage(tablero, 0, 0, partida.getWidth(), partida.getHeight(), partida);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource().equals(jugar)) {
-			showJugadorDialog();
+		if (e.getSource().equals(jugar)) 
+		{
+			jugadores.setLocationRelativeTo(this);
+			jugadores.setVisible(true);
 		} 
 		else if (e.getSource().equals(aceptar)) 
 		{
-			hideJugadorDialog();
-			int numJugadores = getNumeroDeJugadores();
-			setNumeroDeJugadores(numJugadores);
-			showDetallesJugadores(numJugadores);
+			int numJugadores = choJugadores.getSelectedIndex() + 2;;
+			jugadores.setVisible(false);
 			detallesJugadores.removeAll();
 			detallesJugadores.setLayout(new GridLayout(numJugadores + 1, 2));
 			detallesJugadores.setSize(300, 50 * numJugadores);
@@ -105,63 +102,46 @@ public class Menu extends Frame implements WindowListener, ActionListener
 				detallesJugadores.add(new TextField());
 			}
 			detallesJugadores.add(comenzar);
+			detallesJugadores.setVisible(true);
 		}
 		else if(e.getSource().equals(comenzar))
 		{
-			detallesJugadores.setVisible(false);
-			jugadores.setVisible(false);
-			this.setVisible(false);
-			partida.setVisible(true);
-			partida.setSize(800, 800);
-			partida.setLocationRelativeTo(null);
+		    detallesJugadores.setVisible(false);
+		    this.setVisible(false);
+		    partida.setLayout(new BorderLayout()); // Establece el layout del Frame partida como BorderLayout
+		    partida.setVisible(true);
+		    partida.setSize(1200, 838);
+		    partida.setLocationRelativeTo(null);
+
+		    Panel tableroPanel = new Panel() 
+		    {
+		        private static final long serialVersionUID = 1L;
+
+		        @Override
+		        public void paint(Graphics g) {
+		            super.paint(g);
+		            g.drawImage(tablero, 0, 0, this);
+		        }
+		    };
+		    tableroPanel.setPreferredSize(new Dimension(800, 920));
+		    partida.add(tableroPanel, BorderLayout.EAST); // Agrega el panel del tablero a la región este del BorderLayout
+		    partida.addWindowListener(this);
+		    partida.setBackground(Color.blue);
 		}
+
 	}
-
-	// Métodos de la Vista (View)
-	public void showJugadorDialog() 
-	{
-		jugadores.setLocationRelativeTo(this);
-		jugadores.setVisible(true);
-	}
-
-	public void hideJugadorDialog() 
-	{
-		jugadores.setVisible(false);
-	}
-
-	public void showDetallesJugadores(int numJugadores) 
-	{
-		
-
-		
-
-		detallesJugadores.setVisible(true);
-	}
-
-	public int getNumeroDeJugadores() 
-	{
-		return choJugadores.getSelectedIndex() + 2;
-	}
-
-	// Métodos del Modelo (Model)
-	public int getNumeroDeJugadoresModel() 
-	{
-		return numeroDeJugadores;
-	}
-
-	public void setNumeroDeJugadores(int numeroDeJugadores) 
-	{
-		this.numeroDeJugadores = numeroDeJugadores;
-	}
-
-	// Métodos de los listeners de ventana
 	@Override
 	public void windowClosing(WindowEvent e) 
 	{
 		if (jugadores.isActive()) 
 		{
-			hideJugadorDialog();
+			jugadores.setVisible(false);
 		} 
+		else if(partida.isActive())
+		{
+			partida.setVisible(false);
+			System.exit(0);
+		}
 		else 
 		{
 			System.exit(0);
