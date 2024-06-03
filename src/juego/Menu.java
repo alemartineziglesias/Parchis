@@ -21,14 +21,24 @@ public class Menu extends Frame implements WindowListener, ActionListener
 	Choice choJugadores = new Choice();
 	Button aceptar = new Button("Aceptar");
 	Frame detallesJugadores = new Frame("Detalles de Jugadores");
+	TextField nombreRojo = new TextField(20);
+	TextField nombreAmarillo = new TextField(20);
+	TextField nombreAzul = new TextField(20);
+	TextField nombreVerde = new TextField(20);
 	Button comenzar = new Button("Empezar");
 	Frame partida = new Frame("Partida");
+	Label jugadorRojo = new Label("Rojo: ");
+	Label jugadorAzul = new Label("Azul: ");
+	Label jugadorAmarillo = new Label("Amarillo: ");
+	Label jugadorVerde = new Label("Verde: ");
 	Image tablero;
+
+	int numJugadores;
 
 	public Menu() 
 	{
 		setBackground(Color.blue);
-		setLocation(550, 250);
+		setLocationRelativeTo(null);
 		setSize(300, 225);
 		setTitle("Parchís");
 		setResizable(false);
@@ -89,44 +99,83 @@ public class Menu extends Frame implements WindowListener, ActionListener
 		} 
 		else if (e.getSource().equals(aceptar)) 
 		{
-			int numJugadores = choJugadores.getSelectedIndex() + 2;;
+			numJugadores = choJugadores.getSelectedIndex() + 2;;
 			jugadores.setVisible(false);
 			detallesJugadores.removeAll();
 			detallesJugadores.setLayout(new GridLayout(numJugadores + 1, 2));
-			detallesJugadores.setSize(300, 50 * numJugadores);
+			detallesJugadores.setSize(400, 50 * numJugadores);
 			detallesJugadores.setBackground(Color.blue);
 			detallesJugadores.setLocationRelativeTo(null);
 			for (int i = 1; i <= numJugadores; i++) 
 			{
-				detallesJugadores.add(new Label("Nombre del jugador " + i + ":"));
-				detallesJugadores.add(new TextField());
+				if(i == 1)
+				{
+					detallesJugadores.add(new Label("Nombre del jugador rojo:"));
+					detallesJugadores.add(nombreRojo);
+				}
+				else if(i == 2)
+				{
+					detallesJugadores.add(new Label("Nombre del jugador amarillo:"));
+					detallesJugadores.add(nombreAmarillo);
+				}
+				else if(i == 3)
+				{
+					detallesJugadores.add(new Label("Nombre del jugador azul:"));
+					detallesJugadores.add(nombreAzul);
+				}
+				else if(i == 4)
+				{
+					detallesJugadores.add(new Label("Nombre del jugador verde:"));
+					detallesJugadores.add(nombreVerde);
+				}
 			}
 			detallesJugadores.add(comenzar);
 			detallesJugadores.setVisible(true);
 		}
-		else if(e.getSource().equals(comenzar))
-		{
-		    detallesJugadores.setVisible(false);
-		    this.setVisible(false);
-		    partida.setLayout(new BorderLayout()); // Establece el layout del Frame partida como BorderLayout
-		    partida.setVisible(true);
-		    partida.setSize(1200, 838);
-		    partida.setLocationRelativeTo(null);
+		else if (e.getSource().equals(comenzar)) {
+			detallesJugadores.setVisible(false);
+			this.setVisible(false);
+			partida.setLayout(new BorderLayout()); // Cambiar el layout a BorderLayout
+			partida.setVisible(true);
+			partida.setSize(1200, 838);
+			partida.setLocationRelativeTo(null);
 
-		    Panel tableroPanel = new Panel() 
-		    {
-		        private static final long serialVersionUID = 1L;
+			Panel tableroPanel = new Panel() {
+				private static final long serialVersionUID = 1L;
 
-		        @Override
-		        public void paint(Graphics g) {
-		            super.paint(g);
-		            g.drawImage(tablero, 0, 0, this);
-		        }
-		    };
-		    tableroPanel.setPreferredSize(new Dimension(800, 920));
-		    partida.add(tableroPanel, BorderLayout.EAST); // Agrega el panel del tablero a la región este del BorderLayout
-		    partida.addWindowListener(this);
-		    partida.setBackground(Color.blue);
+				@Override
+				public void paint(Graphics g) {
+					super.paint(g);
+					g.drawImage(tablero, 0, 0, this);
+				}
+			};
+			tableroPanel.setPreferredSize(new Dimension(800, 920));
+			partida.add(tableroPanel, BorderLayout.EAST); // Agregar el tablero al este
+
+			Panel jugadoresPanel = new Panel();
+			jugadoresPanel.setLayout(new GridLayout(0, 1, 0, 50)); // Añadir un espacio vertical entre los componentes
+			jugadorRojo.setText(jugadorRojo.getText() + nombreRojo.getText());
+			jugadoresPanel.add(jugadorRojo);
+			if (numJugadores >= 2) {
+				jugadorAmarillo.setText(jugadorAmarillo.getText() + nombreAmarillo.getText());
+				jugadoresPanel.add(jugadorAmarillo);
+			}
+			if (numJugadores >= 3) {
+				jugadorAzul.setText(jugadorAzul.getText() + nombreAzul.getText());
+				jugadoresPanel.add(jugadorAzul);
+			}
+			if (numJugadores >= 4) {
+				jugadorVerde.setText(jugadorVerde.getText() + nombreVerde.getText());
+				jugadoresPanel.add(jugadorVerde);
+			}
+
+			// Agregar un Panel vacío para el espacio
+			Panel espacioInferior = new Panel();
+			jugadoresPanel.add(espacioInferior);
+
+			partida.add(jugadoresPanel, BorderLayout.WEST); // Agregar los jugadores al oeste
+
+			partida.addWindowListener(this);
 		}
 
 	}
@@ -151,36 +200,36 @@ public class Menu extends Frame implements WindowListener, ActionListener
 	@Override
 	public void windowActivated(WindowEvent e) 
 	{ 
-		
+
 	}
-	
+
 	@Override
 	public void windowClosed(WindowEvent e) 
 	{
-		
+
 	}
-	
+
 	@Override
 	public void windowDeactivated(WindowEvent e) 
 	{
-		
+
 	}
-	
+
 	@Override
 	public void windowDeiconified(WindowEvent e) 
 	{
-		
+
 	}
-	
+
 	@Override
 	public void windowIconified(WindowEvent e) 
 	{
-		
+
 	}
-	
+
 	@Override
 	public void windowOpened(WindowEvent e) 
 	{
-		
+
 	}
 }
