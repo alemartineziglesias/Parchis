@@ -4,8 +4,10 @@ import java.awt.*;
 
 import javax.swing.BoxLayout;
 
-public class Vista extends Frame {
+public class Vista extends Frame 
+{
 	private static final long serialVersionUID = 1L;
+
 	Image imagen;
 	Toolkit herramienta;
 	Button jugar = new Button("Jugar");
@@ -16,22 +18,36 @@ public class Vista extends Frame {
 	Choice choJugadores = new Choice();
 	Button aceptar = new Button("Aceptar");
 	Frame detallesJugadores = new Frame("Detalles de Jugadores");
+	TextField nombreRojo = new TextField(20);
+	TextField nombreAmarillo = new TextField(20);
+	TextField nombreAzul = new TextField(20);
+	TextField nombreVerde = new TextField(20);
 	Button comenzar = new Button("Empezar");
-	Frame juego = new Frame("Partida");
+	Frame partida = new Frame("Partida");
+	Label jugadorRojo = new Label("Rojo: ");
+	Label jugadorAzul = new Label("Azul: ");
+	Label jugadorAmarillo = new Label("Amarillo: ");
+	Label jugadorVerde = new Label("Verde: ");
 	Image tablero;
+	Dialog dlgEstadisticas = new Dialog(this, "Estadísticas", true);
+	TextArea listado = new TextArea(5, 40);
+	Button volver = new Button("Volver");
 	
 	int numJugadores;
 
 	public Vista() 
 	{
 		setBackground(Color.blue);
-		setLocation(550, 250);
+		setLocationRelativeTo(null);
 		setSize(300, 225);
 		setTitle("Parchís");
 		setResizable(false);
 		setLayout(new BorderLayout());
+
 		herramienta = getToolkit();
 		imagen = herramienta.getImage("logo.png");
+		tablero = herramienta.getImage("tablero.jpg");
+
 		Panel panelBotones = new Panel();
 		panelBotones.setLayout(new FlowLayout());
 		Panel botonesVertical = new Panel();
@@ -43,7 +59,6 @@ public class Vista extends Frame {
 		add(panelBotones, BorderLayout.SOUTH);
 
 		jugadores.setLayout(new GridLayout(4, 1));
-		jugadores.setLocationRelativeTo(this);
 		jugadores.setSize(200, 150);
 		jugadores.setBackground(Color.blue);
 		jugadores.add(lblJugadores);
@@ -53,31 +68,15 @@ public class Vista extends Frame {
 		jugadores.add(choJugadores);
 		jugadores.add(aceptar);
 		
-		detallesJugadores.removeAll();
-		detallesJugadores.setLayout(new GridLayout(numJugadores + 1, 2));
-		detallesJugadores.setSize(300, 50 * numJugadores);
-		detallesJugadores.setBackground(Color.blue);
-		detallesJugadores.setLocationRelativeTo(null);
-		detallesJugadores.add(comenzar);
-		juego.setLocationRelativeTo(null);
-		juego.setSize(800, 800);
-		juego.setLayout(new FlowLayout());
-		imagen = herramienta.getImage("tablero.jpg");
-		
+
 		setVisible(true);
 	}
-
 	
-
-	public int getNumeroDeJugadores() 
-	{
-		return choJugadores.getSelectedIndex() + 2;
-	}
-
 	@Override
 	public void paint(Graphics g) 
 	{
+		super.paint(g);
 		g.drawImage(imagen, 55, 15, this);
-		g.drawImage(tablero, 55, 15, juego);
+		g.drawImage(tablero, 0, 0, partida.getWidth(), partida.getHeight(), partida);
 	}
 }
