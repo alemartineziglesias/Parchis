@@ -34,6 +34,7 @@ public class Vista extends Frame
 	Label jugadorAmarillo = new Label("Amarillo: ");
 	Label jugadorVerde = new Label("Verde: ");
 	Panel jugadoresPanel = new Panel();
+	Panel tableroPanel;
 	Image tablero;
 	Image rojo;
 	Image amarillo;
@@ -44,8 +45,18 @@ public class Vista extends Frame
 	Dialog dlgEstadisticas = new Dialog(this, "Estadísticas", true);
 	TextArea listado = new TextArea(5, 40);
 	Button volver = new Button("Volver");
+	ImagePanel dadoPanel;
 	
 	int numJugadores;
+	int anchuraRojo = 120;
+	int alturaRojo = 120;
+	int anchuraAzul = 120;
+	int alturaAzul = 640;
+	int anchuraAmarillo = 640;
+	int alturaAmarillo = 640;
+	int anchuraVerde = 640;
+	int alturaVerde = 120;
+	int turno = 1;
 
 	public Vista() 
 	{

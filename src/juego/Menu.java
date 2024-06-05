@@ -40,6 +40,7 @@ public class Menu extends Frame implements WindowListener, ActionListener, Mouse
 	Label jugadorAzul = new Label("Azul: ");
 	Label jugadorAmarillo = new Label("Amarillo: ");
 	Label jugadorVerde = new Label("Verde: ");
+	Panel tableroPanel;
 	Image tablero;
 	Panel jugadoresPanel = new Panel();
 	Image rojo;
@@ -58,8 +59,18 @@ public class Menu extends Frame implements WindowListener, ActionListener, Mouse
 	Connection connection = null;
 	Statement statement = null;
 	ResultSet rs = null;
+	private ImagePanel dadoPanel;
 
 	int numJugadores;
+	int anchuraRojo = 120;
+	int alturaRojo = 120;
+	int anchuraAzul = 120;
+	int alturaAzul = 640;
+	int anchuraAmarillo = 640;
+	int alturaAmarillo = 640;
+	int anchuraVerde = 640;
+	int alturaVerde = 120;
+	int turno = 1;
 
 	public Menu() 
 	{
@@ -212,7 +223,7 @@ public class Menu extends Frame implements WindowListener, ActionListener, Mouse
 			partida.setSize(1200, 838);
 			partida.setLocationRelativeTo(null);
 
-			Panel tableroPanel = new Panel() 
+			tableroPanel = new Panel() 
 			{
 				private static final long serialVersionUID = 1L;
 
@@ -221,16 +232,16 @@ public class Menu extends Frame implements WindowListener, ActionListener, Mouse
 				{
 					super.paint(g);
 					g.drawImage(tablero, 0, 0, this);
-					g.drawImage(rojo, 120, 120, 40, 40, this);
-					g.drawImage(amarillo, 640, 640, 40, 40, this);
+					g.drawImage(rojo, anchuraRojo, alturaRojo, 40, 40, this);
+					g.drawImage(amarillo, anchuraAmarillo, alturaAmarillo, 40, 40, this);
 					if(numJugadores == 3)
 					{
-						g.drawImage(azul, 120, 640, 40, 40, this);
+						g.drawImage(azul, anchuraAzul, alturaAzul, 40, 40, this);
 					}
 					else if(numJugadores > 3)
 					{
-						g.drawImage(azul, 120, 640, 40, 40, this);
-						g.drawImage(verde, 640, 120, 40, 40, this);
+						g.drawImage(azul, anchuraAzul, alturaAzul, 40, 40, this);
+						g.drawImage(verde, anchuraVerde, alturaVerde, 40, 40, this);
 					}
 				}
 			};
@@ -273,13 +284,26 @@ public class Menu extends Frame implements WindowListener, ActionListener, Mouse
 				anchoDado = 100;
 				altoDado = 100;
 			}
-			ImagePanel dadoPanel = new ImagePanel("dado.png", anchoDado, altoDado);
+			dadoPanel = new ImagePanel("dado.png", anchoDado, altoDado);
 			dadoPanel.setBackground(Color.white);
+			dadoPanel.addMouseListener(this);
 			jugadoresPanel.add(dadoPanel);
+			if(numJugadores == 2)
+			{
+				resultado.setFont(new Font("Terminal", Font.PLAIN, 150));
+			}
+			else if(numJugadores == 3)
+			{
+				resultado.setFont(new Font("Terminal", Font.PLAIN, 120));
+			}
+			else
+			{
+				resultado.setFont(new Font("Terminal", Font.PLAIN, 90));
+			}
+			resultado.setAlignment(Label.CENTER);
 			jugadoresPanel.add(resultado);
 			Panel espacioInferior = new Panel();
 			jugadoresPanel.add(espacioInferior);
-			partida.add(jugadoresPanel, BorderLayout.WEST);
 			partida.add(jugadoresPanel, BorderLayout.WEST);
 
 			partida.addWindowListener(this);
@@ -456,12 +480,139 @@ public class Menu extends Frame implements WindowListener, ActionListener, Mouse
 	@Override
 	public void mouseClicked(MouseEvent e)
 	{
-		if(e.getSource().equals(dado))
+		if(e.getSource().equals(dadoPanel))
 		{
 			int tirada = (int) ((Math.random() * 6) + 1);
+			boolean turnoRojo = true;
+			boolean turnoAmarillo = false;
+			boolean turnoAzul = false;
+			boolean turnoVerde = false;
 			resultado.setText(String.valueOf(tirada));
+			if(numJugadores == 2)
+			{
+				if(turno == 1)
+				{
+					turnoRojo = true;
+					turnoAmarillo = false;
+					if(tirada == 5)
+					{
+						anchuraRojo = 280;
+						alturaRojo = 163;
+						tableroPanel.repaint();
+					}
+				}
+				else if(turno == 2)
+				{
+					turnoRojo = false;
+					turnoAmarillo = true;
+					if(tirada == 5)
+					{
+						anchuraAmarillo = 480;
+						alturaAmarillo = 603;
+						tableroPanel.repaint();
+					}
+				}
+				else if(turno > 2)
+				{
+					turno = 1;
+					turnoRojo = true;
+					turnoAmarillo = false;
+					turnoAzul = false;
+					turnoVerde = false;
+				}
+				turno = turno + 1;
+			}
+			else if(numJugadores == 3)
+			{
+				if(turno == 1)
+				{
+					turnoRojo = true;
+					turnoAmarillo = false;
+					turnoAzul = false;
+					
+				}
+				else if(turno == 2)
+				{
+					turnoRojo = false;
+					turnoAmarillo = false;
+					turnoAzul = true;
+				}
+				else if(turno == 3)
+				{
+					turnoRojo = false;
+					turnoAmarillo = true;
+					turnoAzul = false;
+				}
+				else if(turno > 3)
+				{
+					turno = 1;
+					turnoRojo = true;
+					turnoAmarillo = false;
+					turnoAzul = false;
+				}
+				turno = turno + 1;
+			}
+			else if(numJugadores == 4)
+			{
+				if(turno == 1)
+				{
+					turnoRojo = true;
+					turnoAmarillo = false;
+					turnoAzul = false;
+					turnoVerde = false;
+					
+				}
+				else if(turno == 2)
+				{
+					turnoRojo = false;
+					turnoAmarillo = false;
+					turnoAzul = true;
+					turnoVerde = false;
+				}
+				else if(turno == 3)
+				{
+					turnoRojo = false;
+					turnoAmarillo = true;
+					turnoAzul = false;
+					turnoVerde = false;
+				}
+				else if(turno == 4)
+				{
+					turnoRojo = false;
+					turnoAmarillo = false;
+					turnoAzul = false;
+					turnoVerde = true;
+				}
+				else if(turno > 4)
+				{
+					turno = 1;
+					turnoRojo = true;
+					turnoAmarillo = false;
+					turnoAzul = false;
+					turnoVerde = false;
+				}
+				turno = turno + 1;
+			}
+			if(turnoRojo == true)
+			{
+				jugadorRojo.setText("Xd");
+			}
+			if(turnoAmarillo == true)
+			{
+				jugadorAmarillo.setText("Xd");
+				jugadorRojo.setText("Apagado");
+			}
+			if(turnoAzul == true)
+			{
+				jugadorAzul.setText("Xd");
+				jugadorAmarillo.setText("Apagado");
+			}
+			if(turnoVerde == true)
+			{
+				jugadorVerde.setText("Xd");
+				jugadorAzul.setText("Apagado");
+			}
 		}
-		
 	}
 
 	@Override

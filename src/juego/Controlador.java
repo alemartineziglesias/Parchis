@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Label;
@@ -23,6 +24,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		this.m = modelo;
 		this.v = vista;
 		v.addWindowListener(this);
+		v.addMouseListener(this);
 		v.jugadores.addWindowListener(this);
 		v.detallesJugadores.addWindowListener(this);
 		v.jugar.addActionListener(this);
@@ -82,10 +84,10 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 			this.v.setVisible(false);
 			v.partida.setLayout(new BorderLayout());
 			v.partida.setVisible(true);
-			v.setSize(1200, 838);
+			v.partida.setSize(1200, 838);
 			v.partida.setLocationRelativeTo(null);
 
-			Panel tableroPanel = new Panel() 
+			v.tableroPanel = new Panel() 
 			{
 				private static final long serialVersionUID = 1L;
 
@@ -107,8 +109,8 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 					}
 				}
 			};
-			tableroPanel.setPreferredSize(new Dimension(900, 920));
-			v.partida.add(tableroPanel, BorderLayout.EAST);
+			v.tableroPanel.setPreferredSize(new Dimension(900, 920));
+			v.partida.add(v.tableroPanel, BorderLayout.EAST);
 
 			v.jugadoresPanel.setPreferredSize(new Dimension(200, 800));
 			v.jugadoresPanel.setLayout(new GridLayout(0, 1, 0, 50));
@@ -146,9 +148,23 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				anchoDado = 100;
 				altoDado = 100;
 			}
-			Vista.ImagePanel dadoPanel = new Vista.ImagePanel("dado.png", anchoDado, altoDado);
-			dadoPanel.setBackground(Color.white);
-			v.jugadoresPanel.add(dadoPanel);
+			v.dadoPanel = new Vista.ImagePanel("dado.png", anchoDado, altoDado);
+			v.dadoPanel.setBackground(Color.white);
+			v.dadoPanel.addMouseListener(this);
+			v.jugadoresPanel.add(v.dadoPanel);
+			if(v.numJugadores == 2)
+			{
+				v.resultado.setFont(new Font("Terminal", Font.PLAIN, 150));
+			}
+			else if(v.numJugadores == 3)
+			{
+				v.resultado.setFont(new Font("Terminal", Font.PLAIN, 120));
+			}
+			else
+			{
+				v.resultado.setFont(new Font("Terminal", Font.PLAIN, 90));
+			}
+			v.resultado.setAlignment(Label.CENTER);
 			v.jugadoresPanel.add(v.resultado);
 			Panel espacioInferior = new Panel();
 			v.jugadoresPanel.add(espacioInferior);
@@ -261,10 +277,127 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 	@Override
 	public void mouseClicked(MouseEvent e)
 	{
-		if(e.getSource().equals(v.dado))
+		if(e.getSource().equals(v.dadoPanel))
 		{
 			int tirada = (int) ((Math.random() * 6) + 1);
+			boolean turnoRojo = true;
+			boolean turnoAmarillo = false;
+			boolean turnoAzul = false;
+			boolean turnoVerde = false;
 			v.resultado.setText(String.valueOf(tirada));
+			if(v.numJugadores == 2)
+			{
+				if(v.turno == 1)
+				{
+					turnoRojo = true;
+					turnoAmarillo = false;
+					
+				}
+				else if(v.turno == 2)
+				{
+					turnoRojo = false;
+					turnoAmarillo = true;
+				}
+				else if(v.turno > 2)
+				{
+					v.turno = 1;
+					turnoRojo = true;
+					turnoAmarillo = false;
+					turnoAzul = false;
+					turnoVerde = false;
+				}
+				v.turno = v.turno + 1;
+			}
+			else if(v.numJugadores == 3)
+			{
+				if(v.turno == 1)
+				{
+					turnoRojo = true;
+					turnoAmarillo = false;
+					turnoAzul = false;
+					
+				}
+				else if(v.turno == 2)
+				{
+					turnoRojo = false;
+					turnoAmarillo = false;
+					turnoAzul = true;
+				}
+				else if(v.turno == 3)
+				{
+					turnoRojo = false;
+					turnoAmarillo = true;
+					turnoAzul = false;
+				}
+				else if(v.turno > 3)
+				{
+					v.turno = 1;
+					turnoRojo = true;
+					turnoAmarillo = false;
+					turnoAzul = false;
+				}
+				v.turno = v.turno + 1;
+			}
+			else if(v.numJugadores == 4)
+			{
+				if(v.turno == 1)
+				{
+					turnoRojo = true;
+					turnoAmarillo = false;
+					turnoAzul = false;
+					turnoVerde = false;
+					
+				}
+				else if(v.turno == 2)
+				{
+					turnoRojo = false;
+					turnoAmarillo = false;
+					turnoAzul = true;
+					turnoVerde = false;
+				}
+				else if(v.turno == 3)
+				{
+					turnoRojo = false;
+					turnoAmarillo = true;
+					turnoAzul = false;
+					turnoVerde = false;
+				}
+				else if(v.turno == 4)
+				{
+					turnoRojo = false;
+					turnoAmarillo = false;
+					turnoAzul = false;
+					turnoVerde = true;
+				}
+				else if(v.turno > 4)
+				{
+					v.turno = 1;
+					turnoRojo = true;
+					turnoAmarillo = false;
+					turnoAzul = false;
+					turnoVerde = false;
+				}
+				v.turno = v.turno + 1;
+			}
+			if(turnoRojo == true)
+			{
+				v.jugadorRojo.setText("Xd");
+			}
+			if(turnoAmarillo == true)
+			{
+				v.jugadorAmarillo.setText("Xd");
+				v.jugadorRojo.setText("Apagado");
+			}
+			if(turnoAzul == true)
+			{
+				v.jugadorAzul.setText("Xd");
+				v.jugadorAmarillo.setText("Apagado");
+			}
+			if(turnoVerde == true)
+			{
+				v.jugadorVerde.setText("Xd");
+				v.jugadorAzul.setText("Apagado");
+			}
 		}
 		
 	}
