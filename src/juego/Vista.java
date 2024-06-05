@@ -1,8 +1,13 @@
 package juego;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
+import javax.swing.JPanel;
 
 public class Vista extends Frame 
 {
@@ -28,7 +33,14 @@ public class Vista extends Frame
 	Label jugadorAzul = new Label("Azul: ");
 	Label jugadorAmarillo = new Label("Amarillo: ");
 	Label jugadorVerde = new Label("Verde: ");
+	Panel jugadoresPanel = new Panel();
 	Image tablero;
+	Image rojo;
+	Image amarillo;
+	Image azul;
+	Image verde;
+	Image dado;
+	Label resultado = new Label("");
 	Dialog dlgEstadisticas = new Dialog(this, "Estadísticas", true);
 	TextArea listado = new TextArea(5, 40);
 	Button volver = new Button("Volver");
@@ -47,6 +59,13 @@ public class Vista extends Frame
 		herramienta = getToolkit();
 		imagen = herramienta.getImage("logo.png");
 		tablero = herramienta.getImage("tablero.jpg");
+		herramienta = getToolkit();
+		imagen = herramienta.getImage("logo.png");
+		tablero = herramienta.getImage("tablero.jpg");
+		rojo = herramienta.getImage("rojo.png");
+		amarillo = herramienta.getImage("amarillo.png");
+		azul = herramienta.getImage("azul.png");
+		verde = herramienta.getImage("verde.png");
 
 		Panel panelBotones = new Panel();
 		panelBotones.setLayout(new FlowLayout());
@@ -77,6 +96,40 @@ public class Vista extends Frame
 	{
 		super.paint(g);
 		g.drawImage(imagen, 55, 15, this);
-		g.drawImage(tablero, 0, 0, partida.getWidth(), partida.getHeight(), partida);
+	}
+	
+	static class ImagePanel extends JPanel 
+	{
+		private static final long serialVersionUID = 1L;
+		private BufferedImage image;
+		private int ancho;
+		private int alto;
+
+		public ImagePanel(String imagePath, int ancho, int alto) 
+		{
+			try 
+			{
+				image = ImageIO.read(new File(imagePath));
+				this.ancho = ancho;
+				this.alto = alto;
+				setPreferredSize(new Dimension(ancho, alto));
+			} 
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			}
+		}
+
+		@Override
+		protected void paintComponent(Graphics g) 
+		{
+			super.paintComponent(g);
+			if (image != null) 
+			{
+				int x = (this.getWidth() - ancho) / 2;
+				int y = (this.getHeight() - alto) / 2;
+				g.drawImage(image, x, y, ancho, alto, this);
+			}
+		}
 	}
 }

@@ -2,6 +2,7 @@ package juego;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
@@ -9,17 +10,19 @@ import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.Panel;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 
-public class Controlador implements WindowListener, ActionListener 
+public class Controlador implements WindowListener, ActionListener, MouseListener
 {
-    private Modelo m;
-    private Vista v;
+	private Modelo m;
+	private Vista v;
 
-    public Controlador(Modelo modelo, Vista vista) 
-    {
-        this.m = modelo;
-        this.v = vista;
-        v.addWindowListener(this);
+	public Controlador(Modelo modelo, Vista vista) 
+	{
+		this.m = modelo;
+		this.v = vista;
+		v.addWindowListener(this);
 		v.jugadores.addWindowListener(this);
 		v.detallesJugadores.addWindowListener(this);
 		v.jugar.addActionListener(this);
@@ -27,9 +30,10 @@ public class Controlador implements WindowListener, ActionListener
 		v.aceptar.addActionListener(this);
 		v.comenzar.addActionListener(this);
 		v.volver.addActionListener(this);
-    }
+		v.ayuda.addActionListener(this);
+	}
 
-    @Override
+	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
 		if (e.getSource().equals(v.jugar)) 
@@ -78,7 +82,7 @@ public class Controlador implements WindowListener, ActionListener
 			this.v.setVisible(false);
 			v.partida.setLayout(new BorderLayout());
 			v.partida.setVisible(true);
-			v.partida.setSize(1200, 838);
+			v.setSize(1200, 838);
 			v.partida.setLocationRelativeTo(null);
 
 			Panel tableroPanel = new Panel() 
@@ -90,34 +94,66 @@ public class Controlador implements WindowListener, ActionListener
 				{
 					super.paint(g);
 					g.drawImage(v.tablero, 0, 0, this);
+					g.drawImage(v.rojo, 120, 120, 40, 40, this);
+					g.drawImage(v.amarillo, 640, 640, 40, 40, this);
+					if(v.numJugadores == 3)
+					{
+						g.drawImage(v.azul, 120, 640, 40, 40, this);
+					}
+					else if(v.numJugadores > 3)
+					{
+						g.drawImage(v.azul, 120, 640, 40, 40, this);
+						g.drawImage(v.verde, 640, 120, 40, 40, this);
+					}
 				}
 			};
-			tableroPanel.setPreferredSize(new Dimension(800, 920));
-			v.partida.add(tableroPanel, BorderLayout.EAST); // Agregar el tablero al este
+			tableroPanel.setPreferredSize(new Dimension(900, 920));
+			v.partida.add(tableroPanel, BorderLayout.EAST);
 
-			Panel jugadoresPanel = new Panel();
-			jugadoresPanel.setLayout(new GridLayout(0, 1, 0, 50)); // Añadir un espacio vertical entre los componentes
+			v.jugadoresPanel.setPreferredSize(new Dimension(200, 800));
+			v.jugadoresPanel.setLayout(new GridLayout(0, 1, 0, 50));
 			v.jugadorRojo.setText(v.jugadorRojo.getText() + v.nombreRojo.getText());
-			jugadoresPanel.add(v.jugadorRojo);
+			v.jugadoresPanel.add(v.jugadorRojo);
 			if (v.numJugadores >= 2) 
 			{
 				v.jugadorAmarillo.setText(v.jugadorAmarillo.getText() + v.nombreAmarillo.getText());
-				jugadoresPanel.add(v.jugadorAmarillo);
+				v.jugadoresPanel.add(v.jugadorAmarillo);
 			}
 			if (v.numJugadores >= 3) 
 			{
 				v.jugadorAzul.setText(v.jugadorAzul.getText() + v.nombreAzul.getText());
-				jugadoresPanel.add(v.jugadorAzul);
+				v.jugadoresPanel.add(v.jugadorAzul);
 			}
-			if (v.numJugadores >= 4) 
+			if (v.numJugadores == 4) 
 			{
 				v.jugadorVerde.setText(v.jugadorVerde.getText() + v.nombreVerde.getText());
-				jugadoresPanel.add(v.jugadorVerde);
+				v.jugadoresPanel.add(v.jugadorVerde);
 			}
+			int anchoDado = 0;
+			int altoDado = 0;
+			if(v.numJugadores == 2)
+			{
+				anchoDado = 170;
+				altoDado = 170;
+			}
+			else if(v.numJugadores == 3)
+			{
+				anchoDado = 140;
+				altoDado = 140;
+			}
+			else
+			{
+				anchoDado = 100;
+				altoDado = 100;
+			}
+			Vista.ImagePanel dadoPanel = new Vista.ImagePanel("dado.png", anchoDado, altoDado);
+			dadoPanel.setBackground(Color.white);
+			v.jugadoresPanel.add(dadoPanel);
+			v.jugadoresPanel.add(v.resultado);
 			Panel espacioInferior = new Panel();
-			jugadoresPanel.add(espacioInferior);
-
-			v.partida.add(jugadoresPanel, BorderLayout.WEST);
+			v.jugadoresPanel.add(espacioInferior);
+			v.partida.add(v.jugadoresPanel, BorderLayout.WEST);
+			v.partida.add(v.jugadoresPanel, BorderLayout.WEST);
 
 			v.partida.addWindowListener(this);
 		}
@@ -126,7 +162,7 @@ public class Controlador implements WindowListener, ActionListener
 			v.dlgEstadisticas.setLayout(new FlowLayout());
 			m.conectar();
 			v.listado.append(m.dameJugadores());
-			
+
 			v.dlgEstadisticas.addWindowListener(this);
 			v.dlgEstadisticas.add(v.listado);
 			v.dlgEstadisticas.add(v.volver);
@@ -142,6 +178,25 @@ public class Controlador implements WindowListener, ActionListener
 			v.listado.setText("");
 			v.dlgEstadisticas.setVisible(false);
 			m.desconectar();
+		}
+		else if(e.getSource().equals(v.ayuda)) 
+		{
+			try 
+			{
+				File pdfFile = new File("Manual_de_Usuario_Programa_Gestión.pdf");
+				if (Desktop.isDesktopSupported() && pdfFile.exists()) 
+				{
+					Desktop.getDesktop().open(pdfFile);
+				} 
+				else 
+				{
+					System.out.println("No se puede abrir el archivo PDF.");
+				}
+			} 
+			catch (IOException ex) 
+			{
+				ex.printStackTrace();
+			}
 		}
 
 	}
@@ -167,39 +222,78 @@ public class Controlador implements WindowListener, ActionListener
 		}
 	}
 
-    @Override
-    public void windowActivated(WindowEvent e) 
-    { 
-    	
-    }
-    
-    @Override
-    public void windowClosed(WindowEvent e) 
-    {
-    	
-    }
-    
-    @Override
-    public void windowDeactivated(WindowEvent e) 
-    { 
-    	
-    }
-    
-    @Override
-    public void windowDeiconified(WindowEvent e) 
-    {
-    	
-    }
-    
-    @Override
-    public void windowIconified(WindowEvent e) 
-    { 
-    	
-    }
-    
-    @Override
-    public void windowOpened(WindowEvent e) 
-    { 
-    	
-    }
+	@Override
+	public void windowActivated(WindowEvent e) 
+	{ 
+
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) 
+	{
+
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) 
+	{ 
+
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) 
+	{
+
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) 
+	{ 
+
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) 
+	{ 
+
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e)
+	{
+		if(e.getSource().equals(v.dado))
+		{
+			int tirada = (int) ((Math.random() * 6) + 1);
+			v.resultado.setText(String.valueOf(tirada));
+		}
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e)
+	{
+		// TODO Apéndice de método generado automáticamente
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e)
+	{
+		// TODO Apéndice de método generado automáticamente
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e)
+	{
+		// TODO Apéndice de método generado automáticamente
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e)
+	{
+		// TODO Apéndice de método generado automáticamente
+		
+	}
 }

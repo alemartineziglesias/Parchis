@@ -3,15 +3,20 @@ package juego;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
+import javax.swing.JPanel;
 
-public class Menu extends Frame implements WindowListener, ActionListener 
+public class Menu extends Frame implements WindowListener, ActionListener, MouseListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -36,6 +41,13 @@ public class Menu extends Frame implements WindowListener, ActionListener
 	Label jugadorAmarillo = new Label("Amarillo: ");
 	Label jugadorVerde = new Label("Verde: ");
 	Image tablero;
+	Panel jugadoresPanel = new Panel();
+	Image rojo;
+	Image amarillo;
+	Image azul;
+	Image verde;
+	Image dado;
+	Label resultado = new Label("");
 	Dialog dlgEstadisticas = new Dialog(this, "Estadísticas", true);
 	TextArea listado = new TextArea(5, 40);
 	Button volver = new Button("Volver");
@@ -61,6 +73,11 @@ public class Menu extends Frame implements WindowListener, ActionListener
 		herramienta = getToolkit();
 		imagen = herramienta.getImage("logo.png");
 		tablero = herramienta.getImage("tablero.jpg");
+		rojo = herramienta.getImage("rojo.png");
+		amarillo = herramienta.getImage("amarillo.png");
+		azul = herramienta.getImage("azul.png");
+		verde = herramienta.getImage("verde.png");
+		dado = herramienta.getImage("dado.png");
 
 		Panel panelBotones = new Panel();
 		panelBotones.setLayout(new FlowLayout());
@@ -90,12 +107,49 @@ public class Menu extends Frame implements WindowListener, ActionListener
 		aceptar.addActionListener(this);
 		comenzar.addActionListener(this);
 		volver.addActionListener(this);
-		
+		ayuda.addActionListener(this);
+
 
 		setVisible(true);
 	}
 
-	public static void main(String[] args) {
+	class ImagePanel extends JPanel 
+	{
+		private static final long serialVersionUID = 1L;
+		private BufferedImage image;
+		private int ancho;
+		private int alto;
+
+		public ImagePanel(String imagePath, int ancho, int alto) 
+		{
+			try 
+			{
+				image = ImageIO.read(new File(imagePath));
+				this.ancho = ancho;
+				this.alto = alto;
+				setPreferredSize(new Dimension(ancho, alto));
+			} 
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			}
+		}
+
+		@Override
+		protected void paintComponent(Graphics g) 
+		{
+			super.paintComponent(g);
+			if (image != null) 
+			{
+				int x = (this.getWidth() - ancho) / 2;
+				int y = (this.getHeight() - alto) / 2;
+				g.drawImage(image, x, y, ancho, alto, this);
+			}
+		}
+	}
+
+	public static void main(String[] args) 
+	{
 		new Menu();
 	}
 
@@ -104,7 +158,6 @@ public class Menu extends Frame implements WindowListener, ActionListener
 	{
 		super.paint(g);
 		g.drawImage(imagen, 55, 15, this);
-		g.drawImage(tablero, 0, 0, partida.getWidth(), partida.getHeight(), partida);
 	}
 
 	@Override
@@ -168,13 +221,24 @@ public class Menu extends Frame implements WindowListener, ActionListener
 				{
 					super.paint(g);
 					g.drawImage(tablero, 0, 0, this);
+					g.drawImage(rojo, 120, 120, 40, 40, this);
+					g.drawImage(amarillo, 640, 640, 40, 40, this);
+					if(numJugadores == 3)
+					{
+						g.drawImage(azul, 120, 640, 40, 40, this);
+					}
+					else if(numJugadores > 3)
+					{
+						g.drawImage(azul, 120, 640, 40, 40, this);
+						g.drawImage(verde, 640, 120, 40, 40, this);
+					}
 				}
 			};
-			tableroPanel.setPreferredSize(new Dimension(800, 920));
-			partida.add(tableroPanel, BorderLayout.EAST); // Agregar el tablero al este
+			tableroPanel.setPreferredSize(new Dimension(900, 920));
+			partida.add(tableroPanel, BorderLayout.EAST);
 
-			Panel jugadoresPanel = new Panel();
-			jugadoresPanel.setLayout(new GridLayout(0, 1, 0, 50)); // Añadir un espacio vertical entre los componentes
+			jugadoresPanel.setPreferredSize(new Dimension(200, 800));
+			jugadoresPanel.setLayout(new GridLayout(0, 1, 0, 50));
 			jugadorRojo.setText(jugadorRojo.getText() + nombreRojo.getText());
 			jugadoresPanel.add(jugadorRojo);
 			if (numJugadores >= 2) 
@@ -187,14 +251,35 @@ public class Menu extends Frame implements WindowListener, ActionListener
 				jugadorAzul.setText(jugadorAzul.getText() + nombreAzul.getText());
 				jugadoresPanel.add(jugadorAzul);
 			}
-			if (numJugadores >= 4) 
+			if (numJugadores == 4) 
 			{
 				jugadorVerde.setText(jugadorVerde.getText() + nombreVerde.getText());
 				jugadoresPanel.add(jugadorVerde);
 			}
+			int anchoDado = 0;
+			int altoDado = 0;
+			if(numJugadores == 2)
+			{
+				anchoDado = 170;
+				altoDado = 170;
+			}
+			else if(numJugadores == 3)
+			{
+				anchoDado = 140;
+				altoDado = 140;
+			}
+			else
+			{
+				anchoDado = 100;
+				altoDado = 100;
+			}
+			ImagePanel dadoPanel = new ImagePanel("dado.png", anchoDado, altoDado);
+			dadoPanel.setBackground(Color.white);
+			jugadoresPanel.add(dadoPanel);
+			jugadoresPanel.add(resultado);
 			Panel espacioInferior = new Panel();
 			jugadoresPanel.add(espacioInferior);
-
+			partida.add(jugadoresPanel, BorderLayout.WEST);
 			partida.add(jugadoresPanel, BorderLayout.WEST);
 
 			partida.addWindowListener(this);
@@ -204,7 +289,7 @@ public class Menu extends Frame implements WindowListener, ActionListener
 			dlgEstadisticas.setLayout(new FlowLayout());
 			conectar();
 			listado.append(dameJugadores());
-			
+
 			dlgEstadisticas.addWindowListener(this);
 			dlgEstadisticas.add(listado);
 			dlgEstadisticas.add(volver);
@@ -220,6 +305,25 @@ public class Menu extends Frame implements WindowListener, ActionListener
 			listado.setText("");
 			dlgEstadisticas.setVisible(false);
 			desconectar();
+		}
+		else if(e.getSource().equals(ayuda)) 
+		{
+			try 
+			{
+				File pdfFile = new File("Manual_de_Usuario_Programa_Gestión.pdf");
+				if (Desktop.isDesktopSupported() && pdfFile.exists()) 
+				{
+					Desktop.getDesktop().open(pdfFile);
+				} 
+				else 
+				{
+					System.out.println("No se puede abrir el archivo PDF.");
+				}
+			} 
+			catch (IOException ex) 
+			{
+				ex.printStackTrace();
+			}
 		}
 
 	}
@@ -280,7 +384,7 @@ public class Menu extends Frame implements WindowListener, ActionListener
 	{
 
 	}
-	
+
 	public boolean conectar()
 	{
 		boolean conexionCorrecta = true;
@@ -306,7 +410,7 @@ public class Menu extends Frame implements WindowListener, ActionListener
 		}
 		return conexionCorrecta;
 	}
-	
+
 	public String dameJugadores()
 	{
 		String contenido = "";
@@ -331,7 +435,7 @@ public class Menu extends Frame implements WindowListener, ActionListener
 		}
 		return contenido;
 	}
-	
+
 	public void desconectar()
 	{
 		try
@@ -347,5 +451,44 @@ public class Menu extends Frame implements WindowListener, ActionListener
 		{
 
 		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e)
+	{
+		if(e.getSource().equals(dado))
+		{
+			int tirada = (int) ((Math.random() * 6) + 1);
+			resultado.setText(String.valueOf(tirada));
+		}
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e)
+	{
+		// TODO Apéndice de método generado automáticamente
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e)
+	{
+		// TODO Apéndice de método generado automáticamente
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e)
+	{
+		// TODO Apéndice de método generado automáticamente
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e)
+	{
+		// TODO Apéndice de método generado automáticamente
+		
 	}
 }
