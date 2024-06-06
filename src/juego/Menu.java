@@ -70,6 +70,18 @@ public class Menu extends Frame implements WindowListener, ActionListener, Mouse
 	int alturaAmarillo = 640;
 	int anchuraVerde = 640;
 	int alturaVerde = 120;
+	int contadorRojo = 0;
+	int contadorAzul = 0;
+	int contadorAmarillo = 0;
+	int contadorVerde = 0;
+	boolean salidaRojo = false;
+	boolean salidaAzul = false;
+	boolean salidaAmarillo = false;
+	boolean salidaVerde = false;
+	int metaRojo = 0;
+	int metaAzul = 0;
+	int metaAmarillo = 0;
+	int metaVerde = 0;
 	int turno = 1;
 
 	public Menu() 
@@ -492,125 +504,1679 @@ public class Menu extends Frame implements WindowListener, ActionListener, Mouse
 			{
 				if(turno == 1) 
 				{
+					resultado.setForeground(Color.red);
 					turnoRojo = true;
 					turnoAmarillo = false;
-					if(tirada == 5) 
+					if(tirada == 5 & salidaRojo == false) 
 					{
 						anchuraRojo = 280;
 						alturaRojo = 160;
 						tableroPanel.repaint();
+						salidaRojo = true;
 					}
-					turno = 2;
+					else if(salidaRojo == true)
+					{
+						metaRojo = metaRojo + 1;
+						switch(metaRojo)
+						{
+						case 1:
+							anchuraRojo = 280;
+							alturaRojo = 199;
+							tableroPanel.repaint();
+							break;
+						case 2:
+							anchuraRojo = 280;
+							alturaRojo = 239;
+							tableroPanel.repaint();
+							break;
+						case 3:
+							anchuraRojo = 320;
+							alturaRojo = 279;
+							tableroPanel.repaint();
+							break;
+						case 4:
+							anchuraRojo = 280;
+							alturaRojo = 319;
+							tableroPanel.repaint();
+							break;
+						case 5:
+							anchuraRojo = 239;
+							alturaRojo = 279;
+							tableroPanel.repaint();
+							break;
+						case 6:
+							anchuraRojo = 199;
+							alturaRojo = 279;
+							tableroPanel.repaint();
+							break;
+						case 7:
+							anchuraRojo = 160;
+							alturaRojo = 279;
+							tableroPanel.repaint();
+							break;
+						case 8:
+							anchuraRojo = 120;
+							alturaRojo = 279;
+							tableroPanel.repaint();
+							break;
+						case 9:
+							anchuraRojo = 80;
+							alturaRojo = 279;
+							tableroPanel.repaint();
+							break;
+						case 10:
+							anchuraRojo = 40;
+							alturaRojo = 279;
+							tableroPanel.repaint();
+							break;
+						case 11:
+							anchuraRojo = 1;
+							alturaRojo = 279;
+							tableroPanel.repaint();
+							break;
+						case 12:
+							anchuraRojo = 1;
+							alturaRojo = 359;
+							tableroPanel.repaint();
+							break;
+						case 13:
+							anchuraRojo = 1;
+							alturaRojo = 481;
+							tableroPanel.repaint();
+							break;
+						case 14:
+							anchuraRojo = 40;
+							alturaRojo = 481;
+							tableroPanel.repaint();
+							break;
+						case 15:
+							anchuraRojo = 80;
+							alturaRojo = 481;
+							tableroPanel.repaint();
+							break;
+						case 16:
+							anchuraRojo = 120;
+							alturaRojo = 481;
+							tableroPanel.repaint();
+							break;
+						case 17:
+							anchuraRojo = 160;
+							alturaRojo = 481;
+							tableroPanel.repaint();
+							break;
+						case 18:
+							anchuraRojo = 199;
+							alturaRojo = 481;
+							tableroPanel.repaint();
+							break;
+						case 19:
+							anchuraRojo = 239;
+							alturaRojo = 481;
+							tableroPanel.repaint();
+							break;
+						case 20:
+							anchuraRojo = 281;
+							alturaRojo = 441;
+							tableroPanel.repaint();
+							break;
+						case 21:
+							anchuraRojo = 319;
+							alturaRojo = 481;
+							tableroPanel.repaint();
+							break;
+						case 22:
+							anchuraRojo = 281;
+							alturaRojo = 522;
+							tableroPanel.repaint();
+							break;
+						case 23:
+							anchuraRojo = 281;
+							alturaRojo = 562;
+							tableroPanel.repaint();
+							break;
+						case 24:
+							anchuraRojo = 281;
+							alturaRojo = 602;
+							tableroPanel.repaint();
+							break;
+						case 25:
+							anchuraRojo = 281;
+							alturaRojo = 641;
+							tableroPanel.repaint();
+							break;
+						case 26:
+							anchuraRojo = 281;
+							alturaRojo = 681;
+							tableroPanel.repaint();
+							break;
+						case 27:
+							anchuraRojo = 281;
+							alturaRojo = 721;
+							tableroPanel.repaint();
+							break;
+						case 28:
+							anchuraRojo = 281;
+							alturaRojo = 760;
+							tableroPanel.repaint();
+							break;
+						case 29:
+							anchuraRojo = 361;
+							alturaRojo = 760;
+							tableroPanel.repaint();
+							break;
+						case 30:
+							anchuraRojo = 481;
+							alturaRojo = 760;
+							tableroPanel.repaint();
+							break;
+						case 31:
+							anchuraRojo = 481;
+							alturaRojo = 720;
+							tableroPanel.repaint();
+							break;
+						case 32:
+							anchuraRojo = 481;
+							alturaRojo = 680;
+							tableroPanel.repaint();
+							break;
+						case 33:
+							anchuraRojo = 481;
+							alturaRojo = 641;
+							tableroPanel.repaint();
+							break;
+						case 34:
+							anchuraRojo = 481;
+							alturaRojo = 601;
+							tableroPanel.repaint();
+							break;
+						case 35:
+							anchuraRojo = 481;
+							alturaRojo = 562;
+							tableroPanel.repaint();
+							break;
+						case 36:
+							anchuraRojo = 481;
+							alturaRojo = 522;
+							tableroPanel.repaint();
+							break;
+						case 37:
+							anchuraRojo = 441;
+							alturaRojo = 482;
+							tableroPanel.repaint();
+							break;
+						case 38:
+							anchuraRojo = 481;
+							alturaRojo = 442;
+							tableroPanel.repaint();
+							break;
+						case 39:
+							anchuraRojo = 522;
+							alturaRojo = 482;
+							tableroPanel.repaint();
+							break;
+						case 40:
+							anchuraRojo = 562;
+							alturaRojo = 482;
+							tableroPanel.repaint();
+							break;
+						case 41:
+							anchuraRojo = 601;
+							alturaRojo = 482;
+							tableroPanel.repaint();
+							break;
+						case 42:
+							anchuraRojo = 641;
+							alturaRojo = 482;
+							tableroPanel.repaint();
+							break;
+						case 43:
+							anchuraRojo = 680;
+							alturaRojo = 482;
+							tableroPanel.repaint();
+							break;
+						case 44:
+							anchuraRojo = 720;
+							alturaRojo = 482;
+							tableroPanel.repaint();
+							break;
+						case 45:
+							anchuraRojo = 760;
+							alturaRojo = 482;
+							tableroPanel.repaint();
+							break;
+						case 46:
+							anchuraRojo = 760;
+							alturaRojo = 401;
+							tableroPanel.repaint();
+							break;
+						case 47:
+							anchuraRojo = 760;
+							alturaRojo = 281;
+							tableroPanel.repaint();
+							break;
+						case 48:
+							anchuraRojo = 720;
+							alturaRojo = 281;
+							tableroPanel.repaint();
+							break;
+						case 49:
+							anchuraRojo = 680;
+							alturaRojo = 281;
+							tableroPanel.repaint();
+							break;
+						case 50:
+							anchuraRojo = 641;
+							alturaRojo = 281;
+							tableroPanel.repaint();
+							break;
+						case 51:
+							anchuraRojo = 602;
+							alturaRojo = 281;
+							tableroPanel.repaint();
+							break;
+						case 52:
+							anchuraRojo = 562;
+							alturaRojo = 281;
+							tableroPanel.repaint();
+							break;
+						case 53:
+							anchuraRojo = 522;
+							alturaRojo = 281;
+							tableroPanel.repaint();
+							break;
+						case 54:
+							anchuraRojo = 482;
+							alturaRojo = 320;
+							tableroPanel.repaint();
+							break;
+						case 55:
+							anchuraRojo = 442;
+							alturaRojo = 280;
+							tableroPanel.repaint();
+							break;
+						case 56:
+							anchuraRojo = 482;
+							alturaRojo = 239;
+							tableroPanel.repaint();
+							break;
+						case 57:
+							anchuraRojo = 482;
+							alturaRojo = 199;
+							tableroPanel.repaint();
+							break;
+						case 58:
+							anchuraRojo = 482;
+							alturaRojo = 159;
+							tableroPanel.repaint();
+							break;
+						case 59:
+							anchuraRojo = 482;
+							alturaRojo = 119;
+							tableroPanel.repaint();
+							break;
+						case 60:
+							anchuraRojo = 482;
+							alturaRojo = 80;
+							tableroPanel.repaint();
+							break;
+						case 61:
+							anchuraRojo = 482;
+							alturaRojo = 40;
+							tableroPanel.repaint();
+							break;
+						case 62:
+							anchuraRojo = 482;
+							alturaRojo = 1;
+							tableroPanel.repaint();
+							break;
+						case 63:
+							anchuraRojo = 400;
+							alturaRojo = 1;
+							tableroPanel.repaint();
+							break;
+						case 64:
+							anchuraRojo = 400;
+							alturaRojo = 40;
+							tableroPanel.repaint();
+							break;
+						case 65:
+							anchuraRojo = 400;
+							alturaRojo = 80;
+							tableroPanel.repaint();
+							break;
+						case 66:
+							anchuraRojo = 400;
+							alturaRojo = 120;
+							tableroPanel.repaint();
+							break;
+						case 67:
+							anchuraRojo = 400;
+							alturaRojo = 159;
+							tableroPanel.repaint();
+							break;
+						case 68:
+							anchuraRojo = 400;
+							alturaRojo = 199;
+							tableroPanel.repaint();
+							break;
+						case 69:
+							anchuraRojo = 400;
+							alturaRojo = 239;
+							tableroPanel.repaint();
+							break;
+						case 70:
+							anchuraRojo = 400;
+							alturaRojo = 280;
+							tableroPanel.repaint();
+							break;
+						case 71:
+							anchuraRojo = 380;
+							alturaRojo = 340;
+							tableroPanel.repaint();
+							break;
+						}
+					}
+					if(tirada != 6)
+					{
+						contadorRojo = 0;
+						turno = 2;
+					}
+					else if(tirada == 6 & salidaRojo == true)
+					{
+						contadorRojo = contadorRojo + 1;
+						if(contadorRojo == 3)
+						{
+							anchuraRojo = 120;
+							alturaRojo = 120;
+							tableroPanel.repaint();
+							salidaRojo = false;
+							contadorRojo = 0;
+							metaRojo = 0;
+							turno = 2;
+						}
+					}
 				} 
 				else if(turno == 2) 
 				{
+					resultado.setForeground(Color.yellow);
 					turnoRojo = false;
 					turnoAmarillo = true;
-					if(tirada == 5) 
+					if(tirada == 5 & salidaAmarillo == false) 
 					{
 						anchuraAmarillo = 480;
 						alturaAmarillo = 603;
 						tableroPanel.repaint();
+						salidaAmarillo = true;
 					}
-					turno = 1;
+					else if(salidaAmarillo == true)
+					{
+						metaAmarillo = metaAmarillo + 1;
+						switch(metaAmarillo)
+						{
+						case 1:
+							anchuraAmarillo = 481;
+							alturaAmarillo = 562;
+							tableroPanel.repaint();
+							break;
+						case 2:
+							anchuraAmarillo = 481;
+							alturaAmarillo = 522;
+							tableroPanel.repaint();
+							break;
+						case 3:
+							anchuraAmarillo = 441;
+							alturaAmarillo = 482;
+							tableroPanel.repaint();
+							break;
+						case 4:
+							anchuraAmarillo = 481;
+							alturaAmarillo = 442;
+							tableroPanel.repaint();
+							break;
+						case 5:
+							anchuraAmarillo = 522;
+							alturaAmarillo = 482;
+							tableroPanel.repaint();
+							break;
+						case 6:
+							anchuraAmarillo = 562;
+							alturaAmarillo = 482;
+							tableroPanel.repaint();
+							break;
+						case 7:
+							anchuraAmarillo = 601;
+							alturaAmarillo = 482;
+							tableroPanel.repaint();
+							break;
+						case 8:
+							anchuraAmarillo = 641;
+							alturaAmarillo = 482;
+							tableroPanel.repaint();
+							break;
+						case 9:
+							anchuraAmarillo = 680;
+							alturaAmarillo = 482;
+							tableroPanel.repaint();
+							break;
+						case 10:
+							anchuraAmarillo = 720;
+							alturaAmarillo = 482;
+							tableroPanel.repaint();
+							break;
+						case 11:
+							anchuraAmarillo = 760;
+							alturaAmarillo = 482;
+							tableroPanel.repaint();
+							break;
+						case 12:
+							anchuraAmarillo = 760;
+							alturaAmarillo = 401;
+							tableroPanel.repaint();
+							break;
+						case 13:
+							anchuraAmarillo = 760;
+							alturaAmarillo = 281;
+							tableroPanel.repaint();
+							break;
+						case 14:
+							anchuraAmarillo = 720;
+							alturaAmarillo = 281;
+							tableroPanel.repaint();
+							break;
+						case 15:
+							anchuraAmarillo = 680;
+							alturaAmarillo = 281;
+							tableroPanel.repaint();
+							break;
+						case 16:
+							anchuraAmarillo = 641;
+							alturaAmarillo = 281;
+							tableroPanel.repaint();
+							break;
+						case 17:
+							anchuraAmarillo = 602;
+							alturaAmarillo = 281;
+							tableroPanel.repaint();
+							break;
+						case 18:
+							anchuraAmarillo = 562;
+							alturaAmarillo = 281;
+							tableroPanel.repaint();
+							break;
+						case 19:
+							anchuraAmarillo = 522;
+							alturaAmarillo = 281;
+							tableroPanel.repaint();
+							break;
+						case 20:
+							anchuraAmarillo = 482;
+							alturaAmarillo = 320;
+							tableroPanel.repaint();
+							break;
+						case 21:
+							anchuraAmarillo = 442;
+							alturaAmarillo = 280;
+							tableroPanel.repaint();
+							break;
+						case 22:
+							anchuraAmarillo = 482;
+							alturaAmarillo = 239;
+							tableroPanel.repaint();
+							break;
+						case 23:
+							anchuraAmarillo = 482;
+							alturaAmarillo = 199;
+							tableroPanel.repaint();
+							break;
+						case 24:
+							anchuraAmarillo = 482;
+							alturaAmarillo = 159;
+							tableroPanel.repaint();
+							break;
+						case 25:
+							anchuraAmarillo = 482;
+							alturaAmarillo = 119;
+							tableroPanel.repaint();
+							break;
+						case 26:
+							anchuraAmarillo = 482;
+							alturaAmarillo = 80;
+							tableroPanel.repaint();
+							break;
+						case 27:
+							anchuraAmarillo = 482;
+							alturaAmarillo = 40;
+							tableroPanel.repaint();
+							break;
+						case 28:
+							anchuraAmarillo = 482;
+							alturaAmarillo = 1;
+							tableroPanel.repaint();
+							break;
+						case 29:
+							anchuraAmarillo = 400;
+							alturaAmarillo = 1;
+							tableroPanel.repaint();
+							break;
+						case 30:
+							anchuraAmarillo = 280;
+							alturaAmarillo = 1;
+							tableroPanel.repaint();
+							break;
+						case 31:
+							anchuraAmarillo = 280;
+							alturaAmarillo = 42;
+							tableroPanel.repaint();
+							break;
+						case 32:
+							anchuraAmarillo = 280;
+							alturaAmarillo = 81;
+							tableroPanel.repaint();
+							break;
+						case 33:
+							anchuraAmarillo = 280;
+							alturaAmarillo = 121;
+							tableroPanel.repaint();
+							break;
+						case 34:
+							anchuraAmarillo = 280;
+							alturaAmarillo = 160;
+							tableroPanel.repaint();
+							break;
+						case 35:
+							anchuraAmarillo = 280;
+							alturaAmarillo = 199;
+							tableroPanel.repaint();
+							break;
+						case 36:
+							anchuraAmarillo = 280;
+							alturaAmarillo = 239;
+							tableroPanel.repaint();
+							break;
+						case 37:
+							anchuraAmarillo = 320;
+							alturaAmarillo = 279;
+							tableroPanel.repaint();
+							break;
+						case 38:
+							anchuraAmarillo = 280;
+							alturaAmarillo = 319;
+							tableroPanel.repaint();
+							break;
+						case 39:
+							anchuraAmarillo = 239;
+							alturaAmarillo = 279;
+							tableroPanel.repaint();
+							break;
+						case 40:
+							anchuraAmarillo = 199;
+							alturaAmarillo = 279;
+							tableroPanel.repaint();
+							break;
+						case 41:
+							anchuraAmarillo = 160;
+							alturaAmarillo = 279;
+							tableroPanel.repaint();
+							break;
+						case 42:
+							anchuraAmarillo = 120;
+							alturaAmarillo = 279;
+							tableroPanel.repaint();
+							break;
+						case 43:
+							anchuraAmarillo = 80;
+							alturaAmarillo = 279;
+							tableroPanel.repaint();
+							break;
+						case 44:
+							anchuraAmarillo = 40;
+							alturaAmarillo = 279;
+							tableroPanel.repaint();
+							break;
+						case 45:
+							anchuraAmarillo = 1;
+							alturaAmarillo = 279;
+							tableroPanel.repaint();
+							break;
+						case 46:
+							anchuraAmarillo = 1;
+							alturaAmarillo = 359;
+							tableroPanel.repaint();
+							break;
+						case 47:
+							anchuraAmarillo = 1;
+							alturaAmarillo = 481;
+							tableroPanel.repaint();
+							break;
+						case 48:
+							anchuraAmarillo = 40;
+							alturaAmarillo = 481;
+							tableroPanel.repaint();
+							break;
+						case 49:
+							anchuraAmarillo = 80;
+							alturaAmarillo = 481;
+							tableroPanel.repaint();
+							break;
+						case 50:
+							anchuraAmarillo = 120;
+							alturaAmarillo = 481;
+							tableroPanel.repaint();
+							break;
+						case 51:
+							anchuraAmarillo = 160;
+							alturaAmarillo = 481;
+							tableroPanel.repaint();
+							break;
+						case 52:
+							anchuraAmarillo = 199;
+							alturaAmarillo = 481;
+							tableroPanel.repaint();
+							break;
+						case 53:
+							anchuraAmarillo = 239;
+							alturaAmarillo = 481;
+							tableroPanel.repaint();
+							break;
+						case 54:
+							anchuraAmarillo = 281;
+							alturaAmarillo = 441;
+							tableroPanel.repaint();
+							break;
+						case 55:
+							anchuraAmarillo = 319;
+							alturaAmarillo = 481;
+							tableroPanel.repaint();
+							break;
+						case 56:
+							anchuraAmarillo = 281;
+							alturaAmarillo = 522;
+							tableroPanel.repaint();
+							break;
+						case 57:
+							anchuraAmarillo = 281;
+							alturaAmarillo = 562;
+							tableroPanel.repaint();
+							break;
+						case 58:
+							anchuraAmarillo = 281;
+							alturaAmarillo = 602;
+							tableroPanel.repaint();
+							break;
+						case 59:
+							anchuraAmarillo = 281;
+							alturaAmarillo = 641;
+							tableroPanel.repaint();
+							break;
+						case 60:
+							anchuraAmarillo = 281;
+							alturaAmarillo = 681;	
+							tableroPanel.repaint();
+							break;
+						case 61:
+							anchuraAmarillo = 281;
+							alturaAmarillo = 721;
+							tableroPanel.repaint();
+							break;
+						case 62:
+							anchuraAmarillo = 281;
+							alturaAmarillo = 760;
+							tableroPanel.repaint();
+							break;
+						case 63:
+							anchuraAmarillo = 280;
+							alturaAmarillo = 160;
+							tableroPanel.repaint();
+							break;
+						case 64:
+							anchuraAmarillo = 400;
+							alturaAmarillo = 40;
+							tableroPanel.repaint();
+							break;
+						case 65:
+							anchuraAmarillo = 400;
+							alturaAmarillo = 80;
+							tableroPanel.repaint();
+							break;
+						case 66:
+							anchuraAmarillo = 400;
+							alturaAmarillo = 120;
+							tableroPanel.repaint();
+							break;
+						case 67:
+							anchuraAmarillo = 400;
+							alturaAmarillo = 159;
+							tableroPanel.repaint();
+							break;
+						case 68:
+							anchuraAmarillo = 400;
+							alturaAmarillo = 199;
+							tableroPanel.repaint();
+							break;
+						case 69:
+							anchuraAmarillo = 400;
+							alturaAmarillo = 239;
+							tableroPanel.repaint();
+							break;
+						case 70:
+							anchuraAmarillo = 400;
+							alturaAmarillo = 280;
+							tableroPanel.repaint();
+							break;
+						case 71:
+							anchuraAmarillo = 380;
+							alturaAmarillo = 340;
+							tableroPanel.repaint();
+							break;
+						}
+					}
+
+					if(tirada != 6)
+					{
+						contadorAmarillo = 0;
+						turno = 1;
+					}
+					else if(tirada == 6 & salidaAmarillo == true)
+					{
+						contadorAmarillo = contadorAmarillo + 1;
+						if(contadorAmarillo == 3)
+						{
+							anchuraAmarillo = 120;
+							alturaAmarillo = 120;
+							tableroPanel.repaint();
+							salidaAmarillo = false;
+							contadorAmarillo = 0;
+							metaAmarillo = 0;
+							turno = 1;
+						}
+					}
 				}
 			}
 			else if(numJugadores == 3)
 			{
 				if(turno == 1)
 				{
+					resultado.setForeground(Color.red);
 					turnoRojo = true;
 					turnoAmarillo = false;
 					turnoAzul = false;
-					if(tirada == 5) 
+					if(tirada == 5 & salidaRojo == false) 
 					{
 						anchuraRojo = 280;
 						alturaRojo = 160;
 						tableroPanel.repaint();
+						salidaRojo = true;
 					}
-					turno = 2;
+					else if(salidaRojo == true)
+					{
+						metaRojo = metaRojo + tirada;
+						switch(metaRojo)
+						{
+						case 1:
+							anchuraRojo = 280;
+							alturaRojo = 199;
+							tableroPanel.repaint();
+							break;
+						case 2:
+							anchuraRojo = 280;
+							alturaRojo = 239;
+							tableroPanel.repaint();
+							break;
+						case 3:
+							anchuraRojo = 320;
+							alturaRojo = 279;
+							tableroPanel.repaint();
+							break;
+						case 4:
+							anchuraRojo = 280;
+							alturaRojo = 319;
+							tableroPanel.repaint();
+							break;
+						case 5:
+							anchuraRojo = 239;
+							alturaRojo = 279;
+							tableroPanel.repaint();
+							break;
+						case 6:
+							anchuraRojo = 199;
+							alturaRojo = 279;
+							tableroPanel.repaint();
+							break;
+						case 7:
+							anchuraRojo = 160;
+							alturaRojo = 279;
+							tableroPanel.repaint();
+							break;
+						case 8:
+							anchuraRojo = 120;
+							alturaRojo = 279;
+							tableroPanel.repaint();
+							break;
+						case 9:
+							anchuraRojo = 80;
+							alturaRojo = 279;
+							tableroPanel.repaint();
+							break;
+						case 10:
+							anchuraRojo = 40;
+							alturaRojo = 279;
+							tableroPanel.repaint();
+							break;
+						case 11:
+							anchuraRojo = 1;
+							alturaRojo = 279;
+							tableroPanel.repaint();
+							break;
+						case 12:
+							anchuraRojo = 1;
+							alturaRojo = 359;
+							tableroPanel.repaint();
+							break;
+						case 13:
+							anchuraRojo = 1;
+							alturaRojo = 481;
+							tableroPanel.repaint();
+							break;
+						case 14:
+							anchuraRojo = 40;
+							alturaRojo = 481;
+							tableroPanel.repaint();
+							break;
+						case 15:
+							anchuraRojo = 80;
+							alturaRojo = 481;
+							tableroPanel.repaint();
+							break;
+						case 16:
+							anchuraRojo = 120;
+							alturaRojo = 481;
+							tableroPanel.repaint();
+							break;
+						case 17:
+							anchuraRojo = 160;
+							alturaRojo = 481;
+							tableroPanel.repaint();
+							break;
+						case 18:
+							anchuraRojo = 199;
+							alturaRojo = 481;
+							tableroPanel.repaint();
+							break;
+						case 19:
+							anchuraRojo = 239;
+							alturaRojo = 481;
+							tableroPanel.repaint();
+							break;
+						case 20:
+							anchuraRojo = 281;
+							alturaRojo = 441;
+							tableroPanel.repaint();
+							break;
+						case 21:
+							anchuraRojo = 319;
+							alturaRojo = 481;
+							tableroPanel.repaint();
+							break;
+						case 22:
+							anchuraRojo = 281;
+							alturaRojo = 522;
+							tableroPanel.repaint();
+							break;
+						case 23:
+							anchuraRojo = 281;
+							alturaRojo = 562;
+							tableroPanel.repaint();
+							break;
+						case 24:
+							anchuraRojo = 281;
+							alturaRojo = 602;
+							tableroPanel.repaint();
+							break;
+						case 25:
+							anchuraRojo = 281;
+							alturaRojo = 641;
+							tableroPanel.repaint();
+							break;
+						case 26:
+							anchuraRojo = 281;
+							alturaRojo = 681;
+							tableroPanel.repaint();
+							break;
+						case 27:
+							anchuraRojo = 281;
+							alturaRojo = 721;
+							tableroPanel.repaint();
+							break;
+						case 28:
+							anchuraRojo = 281;
+							alturaRojo = 760;
+							tableroPanel.repaint();
+							break;
+						case 29:
+							anchuraRojo = 361;
+							alturaRojo = 760;
+							tableroPanel.repaint();
+							break;
+						case 30:
+							anchuraRojo = 481;
+							alturaRojo = 760;
+							tableroPanel.repaint();
+							break;
+						case 31:
+							anchuraRojo = 481;
+							alturaRojo = 720;
+							tableroPanel.repaint();
+							break;
+						case 32:
+							anchuraRojo = 481;
+							alturaRojo = 680;
+							tableroPanel.repaint();
+							break;
+						case 33:
+							anchuraRojo = 481;
+							alturaRojo = 641;
+							tableroPanel.repaint();
+							break;
+						case 34:
+							anchuraRojo = 481;
+							alturaRojo = 601;
+							tableroPanel.repaint();
+							break;
+						case 35:
+							anchuraRojo = 481;
+							alturaRojo = 562;
+							tableroPanel.repaint();
+							break;
+						case 36:
+							anchuraRojo = 481;
+							alturaRojo = 522;
+							tableroPanel.repaint();
+							break;
+						case 37:
+							anchuraRojo = 441;
+							alturaRojo = 482;
+							tableroPanel.repaint();
+							break;
+						case 38:
+							anchuraRojo = 481;
+							alturaRojo = 442;
+							tableroPanel.repaint();
+							break;
+						case 39:
+							anchuraRojo = 522;
+							alturaRojo = 482;
+							tableroPanel.repaint();
+							break;
+						case 40:
+							anchuraRojo = 562;
+							alturaRojo = 482;
+							tableroPanel.repaint();
+							break;
+						case 41:
+							anchuraRojo = 601;
+							alturaRojo = 482;
+							tableroPanel.repaint();
+							break;
+						case 42:
+							anchuraRojo = 641;
+							alturaRojo = 482;
+							tableroPanel.repaint();
+							break;
+						case 43:
+							anchuraRojo = 680;
+							alturaRojo = 482;
+							tableroPanel.repaint();
+							break;
+						case 44:
+							anchuraRojo = 720;
+							alturaRojo = 482;
+							tableroPanel.repaint();
+							break;
+						case 45:
+							anchuraRojo = 760;
+							alturaRojo = 482;
+							tableroPanel.repaint();
+							break;
+						case 46:
+							anchuraRojo = 760;
+							alturaRojo = 401;
+							tableroPanel.repaint();
+							break;
+						case 47:
+							anchuraRojo = 760;
+							alturaRojo = 281;
+							tableroPanel.repaint();
+							break;
+						case 48:
+							anchuraRojo = 720;
+							alturaRojo = 281;
+							tableroPanel.repaint();
+							break;
+						case 49:
+							anchuraRojo = 680;
+							alturaRojo = 281;
+							tableroPanel.repaint();
+							break;
+						case 50:
+							anchuraRojo = 641;
+							alturaRojo = 281;
+							tableroPanel.repaint();
+							break;
+						case 51:
+							anchuraRojo = 602;
+							alturaRojo = 281;
+							tableroPanel.repaint();
+							break;
+						case 52:
+							anchuraRojo = 562;
+							alturaRojo = 281;
+							tableroPanel.repaint();
+							break;
+						case 53:
+							anchuraRojo = 522;
+							alturaRojo = 281;
+							tableroPanel.repaint();
+							break;
+						case 54:
+							anchuraRojo = 482;
+							alturaRojo = 320;
+							tableroPanel.repaint();
+							break;
+						case 55:
+							anchuraRojo = 442;
+							alturaRojo = 280;
+							tableroPanel.repaint();
+							break;
+						case 56:
+							anchuraRojo = 482;
+							alturaRojo = 239;
+							tableroPanel.repaint();
+							break;
+						case 57:
+							anchuraRojo = 482;
+							alturaRojo = 199;
+							tableroPanel.repaint();
+							break;
+						case 58:
+							anchuraRojo = 482;
+							alturaRojo = 159;
+							tableroPanel.repaint();
+							break;
+						case 59:
+							anchuraRojo = 482;
+							alturaRojo = 119;
+							tableroPanel.repaint();
+							break;
+						case 60:
+							anchuraRojo = 482;
+							alturaRojo = 80;
+							tableroPanel.repaint();
+							break;
+						case 61:
+							anchuraRojo = 482;
+							alturaRojo = 40;
+							tableroPanel.repaint();
+							break;
+						case 62:
+							anchuraRojo = 482;
+							alturaRojo = 1;
+							tableroPanel.repaint();
+							break;
+						case 63:
+							anchuraRojo = 400;
+							alturaRojo = 1;
+							tableroPanel.repaint();
+							break;
+						case 64:
+							anchuraRojo = 400;
+							alturaRojo = 40;
+							tableroPanel.repaint();
+							break;
+						case 65:
+							anchuraRojo = 400;
+							alturaRojo = 80;
+							tableroPanel.repaint();
+							break;
+						case 66:
+							anchuraRojo = 400;
+							alturaRojo = 120;
+							tableroPanel.repaint();
+							break;
+						case 67:
+							anchuraRojo = 400;
+							alturaRojo = 159;
+							tableroPanel.repaint();
+							break;
+						case 68:
+							anchuraRojo = 400;
+							alturaRojo = 199;
+							tableroPanel.repaint();
+							break;
+						case 69:
+							anchuraRojo = 400;
+							alturaRojo = 239;
+							tableroPanel.repaint();
+							break;
+						case 70:
+							anchuraRojo = 400;
+							alturaRojo = 280;
+							tableroPanel.repaint();
+							break;
+						case 71:
+							anchuraRojo = 380;
+							alturaRojo = 340;
+							tableroPanel.repaint();
+							break;
+						}
+					}
+					if(tirada != 6)
+					{
+						contadorRojo = 0;
+						turno = 2;
+					}
+					else if(tirada == 6 & salidaRojo == true)
+					{
+						contadorRojo = contadorRojo + 1;
+						if(contadorRojo == 3)
+						{
+							anchuraRojo = 120;
+							alturaRojo = 120;
+							tableroPanel.repaint();
+							salidaRojo = false;
+							contadorRojo = 0;
+							metaRojo = 0;
+							turno = 2;
+						}
+					}
 				}
 				else if(turno == 2)
 				{
+					resultado.setForeground(Color.blue);
 					turnoRojo = false;
 					turnoAmarillo = false;
 					turnoAzul = true;
-					if(tirada == 5)
+					if(tirada == 5 & salidaAzul == false)
 					{
 						anchuraAzul = 160;
 						alturaAzul = 483;
 						tableroPanel.repaint();
+						salidaAzul = true;
 					}
-					turno = 3;
+					if(tirada != 6)
+					{
+						turno = 3;
+					}
 				}
 				else if(turno == 3)
 				{
+					resultado.setForeground(Color.yellow);
 					turnoRojo = false;
 					turnoAmarillo = true;
 					turnoAzul = false;
-					if(tirada == 5)
+					if(tirada == 5 & salidaAmarillo == false)
 					{
 						anchuraAmarillo = 480;
 						alturaAmarillo = 603;
 						tableroPanel.repaint();
+						salidaAmarillo = true;
 					}
-					turno = 1;
+					if(tirada != 6)
+					{
+						turno = 1;
+					}
 				}
 			}
 			else if(numJugadores == 4)
 			{
 				if(turno == 1)
 				{
+					resultado.setForeground(Color.red);
 					turnoRojo = true;
 					turnoAmarillo = false;
 					turnoAzul = false;
-					if(tirada == 5) 
+					if(tirada == 5 & salidaRojo == false) 
 					{
 						anchuraRojo = 280;
 						alturaRojo = 160;
 						tableroPanel.repaint();
+						salidaRojo = true;
 					}
-					turno = 2;
+					else if(salidaRojo == true)
+					{
+						metaRojo = metaRojo + tirada;
+						switch(metaRojo)
+						{
+						case 1:
+							anchuraRojo = 280;
+							alturaRojo = 199;
+							tableroPanel.repaint();
+							break;
+						case 2:
+							anchuraRojo = 280;
+							alturaRojo = 239;
+							tableroPanel.repaint();
+							break;
+						case 3:
+							anchuraRojo = 320;
+							alturaRojo = 279;
+							tableroPanel.repaint();
+							break;
+						case 4:
+							anchuraRojo = 280;
+							alturaRojo = 319;
+							tableroPanel.repaint();
+							break;
+						case 5:
+							anchuraRojo = 239;
+							alturaRojo = 279;
+							tableroPanel.repaint();
+							break;
+						case 6:
+							anchuraRojo = 199;
+							alturaRojo = 279;
+							tableroPanel.repaint();
+							break;
+						case 7:
+							anchuraRojo = 160;
+							alturaRojo = 279;
+							tableroPanel.repaint();
+							break;
+						case 8:
+							anchuraRojo = 120;
+							alturaRojo = 279;
+							tableroPanel.repaint();
+							break;
+						case 9:
+							anchuraRojo = 80;
+							alturaRojo = 279;
+							tableroPanel.repaint();
+							break;
+						case 10:
+							anchuraRojo = 40;
+							alturaRojo = 279;
+							tableroPanel.repaint();
+							break;
+						case 11:
+							anchuraRojo = 1;
+							alturaRojo = 279;
+							tableroPanel.repaint();
+							break;
+						case 12:
+							anchuraRojo = 1;
+							alturaRojo = 359;
+							tableroPanel.repaint();
+							break;
+						case 13:
+							anchuraRojo = 1;
+							alturaRojo = 481;
+							tableroPanel.repaint();
+							break;
+						case 14:
+							anchuraRojo = 40;
+							alturaRojo = 481;
+							tableroPanel.repaint();
+							break;
+						case 15:
+							anchuraRojo = 80;
+							alturaRojo = 481;
+							tableroPanel.repaint();
+							break;
+						case 16:
+							anchuraRojo = 120;
+							alturaRojo = 481;
+							tableroPanel.repaint();
+							break;
+						case 17:
+							anchuraRojo = 160;
+							alturaRojo = 481;
+							tableroPanel.repaint();
+							break;
+						case 18:
+							anchuraRojo = 199;
+							alturaRojo = 481;
+							tableroPanel.repaint();
+							break;
+						case 19:
+							anchuraRojo = 239;
+							alturaRojo = 481;
+							tableroPanel.repaint();
+							break;
+						case 20:
+							anchuraRojo = 281;
+							alturaRojo = 441;
+							tableroPanel.repaint();
+							break;
+						case 21:
+							anchuraRojo = 319;
+							alturaRojo = 481;
+							tableroPanel.repaint();
+							break;
+						case 22:
+							anchuraRojo = 281;
+							alturaRojo = 522;
+							tableroPanel.repaint();
+							break;
+						case 23:
+							anchuraRojo = 281;
+							alturaRojo = 562;
+							tableroPanel.repaint();
+							break;
+						case 24:
+							anchuraRojo = 281;
+							alturaRojo = 602;
+							tableroPanel.repaint();
+							break;
+						case 25:
+							anchuraRojo = 281;
+							alturaRojo = 641;
+							tableroPanel.repaint();
+							break;
+						case 26:
+							anchuraRojo = 281;
+							alturaRojo = 681;
+							tableroPanel.repaint();
+							break;
+						case 27:
+							anchuraRojo = 281;
+							alturaRojo = 721;
+							tableroPanel.repaint();
+							break;
+						case 28:
+							anchuraRojo = 281;
+							alturaRojo = 760;
+							tableroPanel.repaint();
+							break;
+						case 29:
+							anchuraRojo = 361;
+							alturaRojo = 760;
+							tableroPanel.repaint();
+							break;
+						case 30:
+							anchuraRojo = 481;
+							alturaRojo = 760;
+							tableroPanel.repaint();
+							break;
+						case 31:
+							anchuraRojo = 481;
+							alturaRojo = 720;
+							tableroPanel.repaint();
+							break;
+						case 32:
+							anchuraRojo = 481;
+							alturaRojo = 680;
+							tableroPanel.repaint();
+							break;
+						case 33:
+							anchuraRojo = 481;
+							alturaRojo = 641;
+							tableroPanel.repaint();
+							break;
+						case 34:
+							anchuraRojo = 481;
+							alturaRojo = 601;
+							tableroPanel.repaint();
+							break;
+						case 35:
+							anchuraRojo = 481;
+							alturaRojo = 562;
+							tableroPanel.repaint();
+							break;
+						case 36:
+							anchuraRojo = 481;
+							alturaRojo = 522;
+							tableroPanel.repaint();
+							break;
+						case 37:
+							anchuraRojo = 441;
+							alturaRojo = 482;
+							tableroPanel.repaint();
+							break;
+						case 38:
+							anchuraRojo = 481;
+							alturaRojo = 442;
+							tableroPanel.repaint();
+							break;
+						case 39:
+							anchuraRojo = 522;
+							alturaRojo = 482;
+							tableroPanel.repaint();
+							break;
+						case 40:
+							anchuraRojo = 562;
+							alturaRojo = 482;
+							tableroPanel.repaint();
+							break;
+						case 41:
+							anchuraRojo = 601;
+							alturaRojo = 482;
+							tableroPanel.repaint();
+							break;
+						case 42:
+							anchuraRojo = 641;
+							alturaRojo = 482;
+							tableroPanel.repaint();
+							break;
+						case 43:
+							anchuraRojo = 680;
+							alturaRojo = 482;
+							tableroPanel.repaint();
+							break;
+						case 44:
+							anchuraRojo = 720;
+							alturaRojo = 482;
+							tableroPanel.repaint();
+							break;
+						case 45:
+							anchuraRojo = 760;
+							alturaRojo = 482;
+							tableroPanel.repaint();
+							break;
+						case 46:
+							anchuraRojo = 760;
+							alturaRojo = 401;
+							tableroPanel.repaint();
+							break;
+						case 47:
+							anchuraRojo = 760;
+							alturaRojo = 281;
+							tableroPanel.repaint();
+							break;
+						case 48:
+							anchuraRojo = 720;
+							alturaRojo = 281;
+							tableroPanel.repaint();
+							break;
+						case 49:
+							anchuraRojo = 680;
+							alturaRojo = 281;
+							tableroPanel.repaint();
+							break;
+						case 50:
+							anchuraRojo = 641;
+							alturaRojo = 281;
+							tableroPanel.repaint();
+							break;
+						case 51:
+							anchuraRojo = 602;
+							alturaRojo = 281;
+							tableroPanel.repaint();
+							break;
+						case 52:
+							anchuraRojo = 562;
+							alturaRojo = 281;
+							tableroPanel.repaint();
+							break;
+						case 53:
+							anchuraRojo = 522;
+							alturaRojo = 281;
+							tableroPanel.repaint();
+							break;
+						case 54:
+							anchuraRojo = 482;
+							alturaRojo = 320;
+							tableroPanel.repaint();
+							break;
+						case 55:
+							anchuraRojo = 442;
+							alturaRojo = 280;
+							tableroPanel.repaint();
+							break;
+						case 56:
+							anchuraRojo = 482;
+							alturaRojo = 239;
+							tableroPanel.repaint();
+							break;
+						case 57:
+							anchuraRojo = 482;
+							alturaRojo = 199;
+							tableroPanel.repaint();
+							break;
+						case 58:
+							anchuraRojo = 482;
+							alturaRojo = 159;
+							tableroPanel.repaint();
+							break;
+						case 59:
+							anchuraRojo = 482;
+							alturaRojo = 119;
+							tableroPanel.repaint();
+							break;
+						case 60:
+							anchuraRojo = 482;
+							alturaRojo = 80;
+							tableroPanel.repaint();
+							break;
+						case 61:
+							anchuraRojo = 482;
+							alturaRojo = 40;
+							tableroPanel.repaint();
+							break;
+						case 62:
+							anchuraRojo = 482;
+							alturaRojo = 1;
+							tableroPanel.repaint();
+							break;
+						case 63:
+							anchuraRojo = 400;
+							alturaRojo = 1;
+							tableroPanel.repaint();
+							break;
+						case 64:
+							anchuraRojo = 400;
+							alturaRojo = 40;
+							tableroPanel.repaint();
+							break;
+						case 65:
+							anchuraRojo = 400;
+							alturaRojo = 80;
+							tableroPanel.repaint();
+							break;
+						case 66:
+							anchuraRojo = 400;
+							alturaRojo = 120;
+							tableroPanel.repaint();
+							break;
+						case 67:
+							anchuraRojo = 400;
+							alturaRojo = 159;
+							tableroPanel.repaint();
+							break;
+						case 68:
+							anchuraRojo = 400;
+							alturaRojo = 199;
+							tableroPanel.repaint();
+							break;
+						case 69:
+							anchuraRojo = 400;
+							alturaRojo = 239;
+							tableroPanel.repaint();
+							break;
+						case 70:
+							anchuraRojo = 400;
+							alturaRojo = 280;
+							tableroPanel.repaint();
+							break;
+						case 71:
+							anchuraRojo = 380;
+							alturaRojo = 340;
+							tableroPanel.repaint();
+							break;
+						}
+					}
+					if(tirada != 6)
+					{
+						contadorRojo = 0;
+						turno = 2;
+					}
+					else if(tirada == 6 & salidaRojo == true)
+					{
+						contadorRojo = contadorRojo + 1;
+						if(contadorRojo == 3)
+						{
+							anchuraRojo = 120;
+							alturaRojo = 120;
+							tableroPanel.repaint();
+							salidaRojo = false;
+							contadorRojo = 0;
+							metaRojo = 0;
+							turno = 2;
+						}
+					}
 				}
 				else if(turno == 2)
 				{
+					resultado.setForeground(Color.blue);
 					turnoRojo = false;
 					turnoAmarillo = false;
 					turnoAzul = true;
-					if(tirada == 5)
+					if(tirada == 5 & salidaAzul == false)
 					{
 						anchuraAzul = 160;
 						alturaAzul = 483;
 						tableroPanel.repaint();
+						salidaAzul = true;
 					}
-					turno = 3;
+					if(tirada != 6)
+					{
+						turno = 3;
+					}
 				}
 				else if(turno == 3)
 				{
+					resultado.setForeground(Color.yellow);
 					turnoRojo = false;
 					turnoAmarillo = true;
 					turnoAzul = false;
-					if(tirada == 5)
+					if(tirada == 5 & salidaAmarillo == false)
 					{
 						anchuraAmarillo = 480;
 						alturaAmarillo = 603;
 						tableroPanel.repaint();
+						salidaAmarillo = true;
 					}
-					turno = 4;
+					if(tirada != 6)
+					{
+						turno = 4;
+					}
 				}
 				else if(turno == 4)
 				{
+					resultado.setForeground(Color.green);
 					turnoRojo = false;
 					turnoAmarillo = false;
 					turnoAzul = false;
 					turnoVerde = true;
-					if(tirada == 5)
+					if(tirada == 5 & salidaVerde == false)
 					{
 						anchuraVerde = 600;
 						alturaVerde = 280;
 						tableroPanel.repaint();
+						salidaVerde = true;
 					}
-					turno = 1;
+					if(tirada != 6)
+					{
+						turno = 1;
+					}
 				}
 			}
 		}

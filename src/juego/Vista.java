@@ -56,6 +56,18 @@ public class Vista extends Frame
 	int alturaAmarillo = 640;
 	int anchuraVerde = 640;
 	int alturaVerde = 120;
+	int contadorRojo = 0;
+	int contadorAzul = 0;
+	int contadorAmarillo = 0;
+	int contadorVerde = 0;
+	boolean salidaRojo = false;
+	boolean salidaAzul = false;
+	boolean salidaAmarillo = false;
+	boolean salidaVerde = false;
+	int metaRojo = 0;
+	int metaAzul = 0;
+	int metaAmarillo = 0;
+	int metaVerde = 0;
 	int turno = 1;
 
 	public Vista() 
