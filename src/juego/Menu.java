@@ -490,37 +490,30 @@ public class Menu extends Frame implements WindowListener, ActionListener, Mouse
 			resultado.setText(String.valueOf(tirada));
 			if(numJugadores == 2)
 			{
-				if(turno == 1)
+				if(turno == 1) 
 				{
 					turnoRojo = true;
 					turnoAmarillo = false;
-					if(tirada == 5)
+					if(tirada == 5) 
 					{
 						anchuraRojo = 280;
-						alturaRojo = 163;
+						alturaRojo = 160;
 						tableroPanel.repaint();
 					}
-				}
-				else if(turno == 2)
+					turno = 2;
+				} 
+				else if(turno == 2) 
 				{
 					turnoRojo = false;
 					turnoAmarillo = true;
-					if(tirada == 5)
+					if(tirada == 5) 
 					{
 						anchuraAmarillo = 480;
 						alturaAmarillo = 603;
 						tableroPanel.repaint();
 					}
-				}
-				else if(turno > 2)
-				{
 					turno = 1;
-					turnoRojo = true;
-					turnoAmarillo = false;
-					turnoAzul = false;
-					turnoVerde = false;
 				}
-				turno = turno + 1;
 			}
 			else if(numJugadores == 3)
 			{
@@ -529,28 +522,40 @@ public class Menu extends Frame implements WindowListener, ActionListener, Mouse
 					turnoRojo = true;
 					turnoAmarillo = false;
 					turnoAzul = false;
-					
+					if(tirada == 5) 
+					{
+						anchuraRojo = 280;
+						alturaRojo = 160;
+						tableroPanel.repaint();
+					}
+					turno = 2;
 				}
 				else if(turno == 2)
 				{
 					turnoRojo = false;
 					turnoAmarillo = false;
 					turnoAzul = true;
+					if(tirada == 5)
+					{
+						anchuraAzul = 160;
+						alturaAzul = 483;
+						tableroPanel.repaint();
+					}
+					turno = 3;
 				}
 				else if(turno == 3)
 				{
 					turnoRojo = false;
 					turnoAmarillo = true;
 					turnoAzul = false;
-				}
-				else if(turno > 3)
-				{
+					if(tirada == 5)
+					{
+						anchuraAmarillo = 480;
+						alturaAmarillo = 603;
+						tableroPanel.repaint();
+					}
 					turno = 1;
-					turnoRojo = true;
-					turnoAmarillo = false;
-					turnoAzul = false;
 				}
-				turno = turno + 1;
 			}
 			else if(numJugadores == 4)
 			{
@@ -559,22 +564,39 @@ public class Menu extends Frame implements WindowListener, ActionListener, Mouse
 					turnoRojo = true;
 					turnoAmarillo = false;
 					turnoAzul = false;
-					turnoVerde = false;
-					
+					if(tirada == 5) 
+					{
+						anchuraRojo = 280;
+						alturaRojo = 160;
+						tableroPanel.repaint();
+					}
+					turno = 2;
 				}
 				else if(turno == 2)
 				{
 					turnoRojo = false;
 					turnoAmarillo = false;
 					turnoAzul = true;
-					turnoVerde = false;
+					if(tirada == 5)
+					{
+						anchuraAzul = 160;
+						alturaAzul = 483;
+						tableroPanel.repaint();
+					}
+					turno = 3;
 				}
 				else if(turno == 3)
 				{
 					turnoRojo = false;
 					turnoAmarillo = true;
 					turnoAzul = false;
-					turnoVerde = false;
+					if(tirada == 5)
+					{
+						anchuraAmarillo = 480;
+						alturaAmarillo = 603;
+						tableroPanel.repaint();
+					}
+					turno = 4;
 				}
 				else if(turno == 4)
 				{
@@ -582,35 +604,14 @@ public class Menu extends Frame implements WindowListener, ActionListener, Mouse
 					turnoAmarillo = false;
 					turnoAzul = false;
 					turnoVerde = true;
-				}
-				else if(turno > 4)
-				{
+					if(tirada == 5)
+					{
+						anchuraVerde = 600;
+						alturaVerde = 280;
+						tableroPanel.repaint();
+					}
 					turno = 1;
-					turnoRojo = true;
-					turnoAmarillo = false;
-					turnoAzul = false;
-					turnoVerde = false;
 				}
-				turno = turno + 1;
-			}
-			if(turnoRojo == true)
-			{
-				jugadorRojo.setText("Xd");
-			}
-			if(turnoAmarillo == true)
-			{
-				jugadorAmarillo.setText("Xd");
-				jugadorRojo.setText("Apagado");
-			}
-			if(turnoAzul == true)
-			{
-				jugadorAzul.setText("Xd");
-				jugadorAmarillo.setText("Apagado");
-			}
-			if(turnoVerde == true)
-			{
-				jugadorVerde.setText("Xd");
-				jugadorAzul.setText("Apagado");
 			}
 		}
 	}
@@ -619,27 +620,27 @@ public class Menu extends Frame implements WindowListener, ActionListener, Mouse
 	public void mousePressed(MouseEvent e)
 	{
 		// TODO Apéndice de método generado automáticamente
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e)
 	{
 		// TODO Apéndice de método generado automáticamente
-		
+
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e)
 	{
 		// TODO Apéndice de método generado automáticamente
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e)
 	{
 		// TODO Apéndice de método generado automáticamente
-		
+
 	}
 }

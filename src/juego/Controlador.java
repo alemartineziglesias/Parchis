@@ -96,16 +96,16 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				{
 					super.paint(g);
 					g.drawImage(v.tablero, 0, 0, this);
-					g.drawImage(v.rojo, 120, 120, 40, 40, this);
-					g.drawImage(v.amarillo, 640, 640, 40, 40, this);
+					g.drawImage(v.rojo, v.anchuraRojo, v.alturaRojo, 40, 40, this);
+					g.drawImage(v.amarillo, v.anchuraAmarillo, v.alturaAmarillo, 40, 40, this);
 					if(v.numJugadores == 3)
 					{
-						g.drawImage(v.azul, 120, 640, 40, 40, this);
+						g.drawImage(v.azul, v.anchuraAzul, v.alturaAzul, 40, 40, this);
 					}
 					else if(v.numJugadores > 3)
 					{
-						g.drawImage(v.azul, 120, 640, 40, 40, this);
-						g.drawImage(v.verde, 640, 120, 40, 40, this);
+						g.drawImage(v.azul, v.anchuraAzul, v.alturaAzul, 40, 40, this);
+						g.drawImage(v.verde, v.anchuraVerde, v.alturaVerde, 40, 40, this);
 					}
 				}
 			};
@@ -287,26 +287,30 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 			v.resultado.setText(String.valueOf(tirada));
 			if(v.numJugadores == 2)
 			{
-				if(v.turno == 1)
+				if(v.turno == 1) 
 				{
 					turnoRojo = true;
 					turnoAmarillo = false;
-					
-				}
-				else if(v.turno == 2)
+					if(tirada == 5) 
+					{
+						v.anchuraRojo = 280;
+						v.alturaRojo = 160;
+						v.tableroPanel.repaint();
+					}
+					v.turno = 2;
+				} 
+				else if(v.turno == 2) 
 				{
 					turnoRojo = false;
 					turnoAmarillo = true;
-				}
-				else if(v.turno > 2)
-				{
+					if(tirada == 5) 
+					{
+						v.anchuraAmarillo = 480;
+						v.alturaAmarillo = 603;
+						v.tableroPanel.repaint();
+					}
 					v.turno = 1;
-					turnoRojo = true;
-					turnoAmarillo = false;
-					turnoAzul = false;
-					turnoVerde = false;
 				}
-				v.turno = v.turno + 1;
 			}
 			else if(v.numJugadores == 3)
 			{
@@ -315,28 +319,40 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 					turnoRojo = true;
 					turnoAmarillo = false;
 					turnoAzul = false;
-					
+					if(tirada == 5) 
+					{
+						v.anchuraRojo = 280;
+						v.alturaRojo = 160;
+						v.tableroPanel.repaint();
+					}
+					v.turno = 2;
 				}
 				else if(v.turno == 2)
 				{
 					turnoRojo = false;
 					turnoAmarillo = false;
 					turnoAzul = true;
+					if(tirada == 5)
+					{
+						v.anchuraAzul = 160;
+						v.alturaAzul = 483;
+						v.tableroPanel.repaint();
+					}
+					v.turno = 3;
 				}
 				else if(v.turno == 3)
 				{
 					turnoRojo = false;
 					turnoAmarillo = true;
 					turnoAzul = false;
-				}
-				else if(v.turno > 3)
-				{
+					if(tirada == 5)
+					{
+						v.anchuraAmarillo = 480;
+						v.alturaAmarillo = 603;
+						v.tableroPanel.repaint();
+					}
 					v.turno = 1;
-					turnoRojo = true;
-					turnoAmarillo = false;
-					turnoAzul = false;
 				}
-				v.turno = v.turno + 1;
 			}
 			else if(v.numJugadores == 4)
 			{
@@ -345,22 +361,42 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 					turnoRojo = true;
 					turnoAmarillo = false;
 					turnoAzul = false;
-					turnoVerde = false;
-					
+					if(tirada == 5) 
+					{
+						v.anchuraRojo = 280;
+						v.alturaRojo = 160;
+						v.tableroPanel.repaint();
+					}
+					System.out.println("turno azul");
+					v.turno = 2;
 				}
 				else if(v.turno == 2)
 				{
 					turnoRojo = false;
 					turnoAmarillo = false;
 					turnoAzul = true;
-					turnoVerde = false;
+					if(tirada == 5)
+					{
+						v.anchuraAzul = 160;
+						v.alturaAzul = 483;
+						v.tableroPanel.repaint();
+					}
+					System.out.println("turno amarillo");
+					v.turno = 3;
 				}
 				else if(v.turno == 3)
 				{
 					turnoRojo = false;
 					turnoAmarillo = true;
 					turnoAzul = false;
-					turnoVerde = false;
+					if(tirada == 5)
+					{
+						v.anchuraAmarillo = 480;
+						v.alturaAmarillo = 603;
+						v.tableroPanel.repaint();
+					}
+					System.out.println("turno verde");
+					v.turno = 4;
 				}
 				else if(v.turno == 4)
 				{
@@ -368,38 +404,17 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 					turnoAmarillo = false;
 					turnoAzul = false;
 					turnoVerde = true;
-				}
-				else if(v.turno > 4)
-				{
+					if(tirada == 5)
+					{
+						v.anchuraVerde = 600;
+						v.alturaVerde = 280;
+						v.tableroPanel.repaint();
+					}
+					System.out.println("turno rojo");
 					v.turno = 1;
-					turnoRojo = true;
-					turnoAmarillo = false;
-					turnoAzul = false;
-					turnoVerde = false;
 				}
-				v.turno = v.turno + 1;
-			}
-			if(turnoRojo == true)
-			{
-				v.jugadorRojo.setText("Xd");
-			}
-			if(turnoAmarillo == true)
-			{
-				v.jugadorAmarillo.setText("Xd");
-				v.jugadorRojo.setText("Apagado");
-			}
-			if(turnoAzul == true)
-			{
-				v.jugadorAzul.setText("Xd");
-				v.jugadorAmarillo.setText("Apagado");
-			}
-			if(turnoVerde == true)
-			{
-				v.jugadorVerde.setText("Xd");
-				v.jugadorAzul.setText("Apagado");
 			}
 		}
-		
 	}
 
 	@Override
