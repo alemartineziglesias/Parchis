@@ -28,6 +28,9 @@ public class Vista extends Frame
 	TextField nombreAzul = new TextField(20);
 	TextField nombreVerde = new TextField(20);
 	Button comenzar = new Button("Empezar");
+	Dialog dlgError = new Dialog(this, "Error", true);
+	Label lblError = new Label("");
+	Button btnError = new Button("Ok");
 	Frame partida = new Frame("Partida");
 	Label jugadorRojo = new Label("Rojo: ");
 	Label jugadorAzul = new Label("Azul: ");
@@ -41,6 +44,14 @@ public class Vista extends Frame
 	Image azul;
 	Image verde;
 	Image dado;
+	Dialog dlgVictoria = new Dialog(this, "Enhorabuena", true);
+	Label lblVictoria = new Label("Has ganado!");
+	Button revancha = new Button("Volver a jugar");
+	Button salir = new Button("Salir");
+	Dialog dlgSeguro = new Dialog(this, "¿Seguro?", true);
+	Label lblSeguro = new Label("¿Seguro que quieres salir?");
+	Button si = new Button("Sí");
+	Button no = new Button("No");
 	Label resultado = new Label("");
 	Dialog dlgEstadisticas = new Dialog(this, "Estadísticas", true);
 	TextArea listado = new TextArea(5, 40);
@@ -68,6 +79,10 @@ public class Vista extends Frame
 	int metaAzul = 0;
 	int metaAmarillo = 0;
 	int metaVerde = 0;
+	int victoriasRojo = 0;
+	int victoriasAzul = 0;
+	int victoriasAmarillo = 0;
+	int victoriasVerde = 0;
 	int turno = 1;
 
 	public Vista() 

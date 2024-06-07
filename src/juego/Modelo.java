@@ -83,4 +83,45 @@ public class Modelo
 			
 		}
 	}
+	
+	public int restoRojo(int metaRojo)
+	{
+		int resto;
+		resto = metaRojo - 71;
+		metaRojo = 71 - resto;
+		return metaRojo;
+	}
+
+	public int restoAmarillo(int metaAmarillo) 
+	{
+		int resto;
+		resto = metaAmarillo - 71;
+		metaAmarillo = 71 - resto;
+		return metaAmarillo;
+	}
+
+	public int restoAzul(int metaAzul) 
+	{
+		int resto;
+		resto = metaAzul - 71;
+		metaAzul = 71 - resto;
+		return metaAzul;
+	}
+
+	public int restoVerde(int metaVerde) 
+	{
+		int resto;
+		resto = metaVerde - 71;
+		metaVerde = 71 - resto;
+		return metaVerde;
+	}
+
+	public void rellenarDatos(String nombreRojo, String nombreAzul, String nombreAmarillo, String nombreVerde, int victoriasRojo, int victoriasAmarillo, int victoriasAmarillo2, int victoriasVerde, int numJugadores)
+	{
+		if(numJugadores == 2)
+		{
+			
+		}
+		
+	}
 }
