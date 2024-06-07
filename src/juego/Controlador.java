@@ -34,8 +34,12 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		v.estadisticas.addActionListener(this);
 		v.aceptar.addActionListener(this);
 		v.comenzar.addActionListener(this);
+		v.limpiar.addActionListener(this);
 		v.dlgError.addWindowListener(this);
 		v.btnError.addActionListener(this);
+		v.dlgVictoria.addWindowListener(this);
+		v.revancha.addActionListener(this);
+		v.salir.addActionListener(this);
 		v.volver.addActionListener(this);
 		v.ayuda.addActionListener(this);
 	}
@@ -46,6 +50,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		if (e.getSource().equals(v.jugar)) 
 		{
 			v.jugadores.setLocationRelativeTo(null);
+			v.jugadores.setResizable(false);
 			v.jugadores.setVisible(true);
 		} 
 		else if (e.getSource().equals(v.aceptar)) 
@@ -55,6 +60,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 			v.detallesJugadores.removeAll();
 			v.detallesJugadores.setLayout(new GridLayout(v.numJugadores + 1, 2));
 			v.detallesJugadores.setSize(400, 50 * v.numJugadores);
+			v.detallesJugadores.setResizable(false);
 			v.detallesJugadores.setBackground(Color.blue);
 			v.detallesJugadores.setLocationRelativeTo(null);
 			for (int i = 1; i <= v.numJugadores; i++) 
@@ -81,6 +87,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				}
 			}
 			v.detallesJugadores.add(v.comenzar);
+			v.detallesJugadores.add(v.limpiar);
 			v.detallesJugadores.setVisible(true);
 		}
 		else if (e.getSource().equals(v.comenzar)) 
@@ -93,6 +100,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				v.dlgError.add(v.lblError);
 				v.dlgError.add(v.btnError);
 				v.dlgError.setLocationRelativeTo(null);
+				v.dlgError.setResizable(false);
 				v.dlgError.setVisible(true);
 			}
 			else if(v.numJugadores == 2 & (v.nombreRojo.getText().equals(v.nombreAmarillo.getText())) | v.numJugadores == 3 & (v.nombreRojo.getText().equals(v.nombreAmarillo.getText()) | v.nombreRojo.getText().equals(v.nombreAzul.getText()) | v.nombreAzul.getText().equals(v.nombreAmarillo.getText())) | v.numJugadores == 4 & (v.nombreRojo.getText().equals(v.nombreAzul.getText()) | v.nombreRojo.getText().equals(v.nombreAmarillo.getText()) | v.nombreRojo.getText().equals(v.nombreVerde.getText()) | v.nombreAzul.getText().equals(v.nombreAmarillo.getText()) | v.nombreAzul.getText().equals(v.nombreVerde.getText()) | v.nombreAmarillo.getText().equals(v.nombreVerde.getText())))
@@ -103,6 +111,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				v.dlgError.add(v.lblError);
 				v.dlgError.add(v.btnError);
 				v.dlgError.setLocationRelativeTo(null);
+				v.dlgError.setResizable(false);
 				v.dlgError.setVisible(true);
 			}
 			else
@@ -113,6 +122,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				v.partida.setVisible(true);
 				v.partida.setSize(1200, 838);
 				v.partida.setLocationRelativeTo(null);
+				v.partida.setResizable(false);
 				v.tableroPanel = new Panel() 
 				{
 					private static final long serialVersionUID = 1L;
@@ -224,7 +234,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		{
 			try 
 			{
-				File pdfFile = new File("Manual_de_Usuario_Programa_Gestión.pdf");
+				File pdfFile = new File("Manual de Usuario Juego.pdf");
 				if (Desktop.isDesktopSupported() && pdfFile.exists()) 
 				{
 					Desktop.getDesktop().open(pdfFile);
@@ -272,11 +282,36 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 			v.salidaVerde = false;
 			v.resultado.setText("");
 			v.tableroPanel.repaint();
-			
+			v.dlgVictoria.setVisible(false);
+
 		}
 		else if(e.getSource().equals(v.salir))
 		{
-			m.rellenarDatos(v.nombreRojo.getText(), v.nombreAzul.getText(), v.nombreAmarillo.getText(), v.nombreVerde.getText(), v.victoriasRojo, v.victoriasAzul, v.victoriasAmarillo, v.victoriasVerde, v.numJugadores);
+			m.conectar();
+			if(v.numJugadores == 2)
+			{
+				m.rellenarDatos2(v.nombreRojo.getText(), v.nombreAmarillo.getText(), v.victoriasRojo, v.victoriasAmarillo);
+				System.exit(0);
+			}
+			else if(v.numJugadores == 3)
+			{
+				m.rellenarDatos3(v.nombreRojo.getText(), v.nombreAzul.getText(), v.nombreAmarillo.getText(), v.victoriasRojo, v.victoriasAzul, v.victoriasAmarillo);
+				System.exit(0);
+			}
+			else if(v.numJugadores == 4)
+			{
+				m.rellenarDatos4(v.nombreRojo.getText(), v.nombreAzul.getText(), v.nombreAmarillo.getText(), v.nombreVerde.getText(), v.victoriasRojo, v.victoriasAzul, v.victoriasAmarillo, v.victoriasVerde);
+				System.exit(0);
+			}
+			m.desconectar();
+		}
+		else if (e.getSource().equals(v.limpiar)) 
+		{
+			v.nombreRojo.setText("");
+			v.nombreAmarillo.setText("");
+			v.nombreAzul.setText("");
+			v.nombreVerde.setText("");
+			v.nombreRojo.requestFocus();
 		}
 	}
 	@Override
@@ -311,6 +346,26 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		else if(v.dlgEstadisticas.isActive())
 		{
 			v.dlgEstadisticas.setVisible(false);
+		}
+		else if(v.dlgVictoria.isActive())
+		{
+			m.conectar();
+			if(v.numJugadores == 2)
+			{
+				m.rellenarDatos2(v.nombreRojo.getText(), v.nombreAmarillo.getText(), v.victoriasRojo, v.victoriasAmarillo);
+				System.exit(0);
+			}
+			else if(v.numJugadores == 3)
+			{
+				m.rellenarDatos3(v.nombreRojo.getText(), v.nombreAzul.getText(), v.nombreAmarillo.getText(), v.victoriasRojo, v.victoriasAzul, v.victoriasAmarillo);
+				System.exit(0);
+			}
+			else if(v.numJugadores == 4)
+			{
+				m.rellenarDatos4(v.nombreRojo.getText(), v.nombreAzul.getText(), v.nombreAmarillo.getText(), v.nombreVerde.getText(), v.victoriasRojo, v.victoriasAzul, v.victoriasAmarillo, v.victoriasVerde);
+				System.exit(0);
+			}
+			m.desconectar();
 		}
 		else 
 		{
@@ -360,18 +415,12 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		if(e.getSource().equals(v.dadoPanel))
 		{
 			int tirada = (int) ((Math.random() * 6) + 1);
-			boolean turnoRojo = true;
-			boolean turnoAmarillo = false;
-			boolean turnoAzul = false;
-			boolean turnoVerde = false;
 			v.resultado.setText(String.valueOf(tirada));
 			if(v.numJugadores == 2)
 			{
 				if(v.turno == 1) 
 				{
 					v.resultado.setForeground(Color.red);
-					turnoRojo = true;
-					turnoAmarillo = false;
 					if(tirada == 5 & v.salidaRojo == false) 
 					{
 						v.anchuraRojo = 280;
@@ -742,9 +791,10 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 							v.anchuraRojo = 380;
 							v.alturaRojo = 340;
 							v.tableroPanel.repaint();
+							v.victoriasRojo = v.victoriasRojo + 1;
 							v.dlgVictoria.setLayout(new FlowLayout());
 							v.dlgVictoria.setLocationRelativeTo(null);
-							v.dlgVictoria.setSize(400, 200);
+							v.dlgVictoria.setSize(300, 100);
 							v.dlgVictoria.add(v.lblVictoria);
 							v.dlgVictoria.add(v.revancha);
 							v.dlgVictoria.add(v.salir);
@@ -776,8 +826,6 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				else if(v.turno == 2) 
 				{
 					v.resultado.setForeground(Color.yellow);
-					turnoRojo = false;
-					turnoAmarillo = true;
 					if(tirada == 5 & v.salidaAmarillo == false) 
 					{
 						v.anchuraAmarillo = 480;
@@ -1148,10 +1196,18 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 							v.anchuraAmarillo = 381;
 							v.alturaAmarillo = 421;
 							v.tableroPanel.repaint();
+							v.victoriasAmarillo = v.victoriasAmarillo + 1;
+							v.dlgVictoria.setLayout(new FlowLayout());
+							v.dlgVictoria.setLocationRelativeTo(null);
+							v.dlgVictoria.setSize(300, 100);
+							v.dlgVictoria.add(v.lblVictoria);
+							v.dlgVictoria.add(v.revancha);
+							v.dlgVictoria.add(v.salir);
+							v.dlgVictoria.setResizable(false);
+							v.dlgVictoria.setVisible(true);
 							break;
 						}
 					}
-
 					if(tirada != 6)
 					{
 						v.contadorAmarillo = 0;
@@ -1178,9 +1234,6 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				if(v.turno == 1)
 				{
 					v.resultado.setForeground(Color.red);
-					turnoRojo = true;
-					turnoAmarillo = false;
-					turnoAzul = false;
 					if(tirada == 5 & v.salidaRojo == false) 
 					{
 						v.anchuraRojo = 280;
@@ -1551,6 +1604,15 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 							v.anchuraRojo = 380;
 							v.alturaRojo = 340;
 							v.tableroPanel.repaint();
+							v.victoriasRojo = v.victoriasRojo + 1;
+							v.dlgVictoria.setLayout(new FlowLayout());
+							v.dlgVictoria.setLocationRelativeTo(null);
+							v.dlgVictoria.setSize(300, 100);
+							v.dlgVictoria.add(v.lblVictoria);
+							v.dlgVictoria.add(v.revancha);
+							v.dlgVictoria.add(v.salir);
+							v.dlgVictoria.setResizable(false);
+							v.dlgVictoria.setVisible(true);
 							break;
 						}
 					}
@@ -1577,9 +1639,6 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				else if(v.turno == 2)
 				{
 					v.resultado.setForeground(Color.blue);
-					turnoRojo = false;
-					turnoAmarillo = false;
-					turnoAzul = true;
 					if(tirada == 5 & v.salidaAzul == false)
 					{
 						v.anchuraAzul = 160;
@@ -1947,9 +2006,18 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 							v.tableroPanel.repaint();
 							break;
 						case 71:
-							v.anchuraAzul = 341;
-							v.alturaAzul = 381;
+							v.anchuraAmarillo = 381;
+							v.alturaAmarillo = 421;
 							v.tableroPanel.repaint();
+							v.victoriasAzul = v.victoriasAzul + 1;
+							v.dlgVictoria.setLayout(new FlowLayout());
+							v.dlgVictoria.setLocationRelativeTo(null);
+							v.dlgVictoria.setSize(300, 100);
+							v.dlgVictoria.add(v.lblVictoria);
+							v.dlgVictoria.add(v.revancha);
+							v.dlgVictoria.add(v.salir);
+							v.dlgVictoria.setResizable(false);
+							v.dlgVictoria.setVisible(true);
 							break;
 						}
 					}
@@ -1976,9 +2044,6 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				else if(v.turno == 3)
 				{
 					v.resultado.setForeground(Color.yellow);
-					turnoRojo = false;
-					turnoAmarillo = true;
-					turnoAzul = false;
 					if(tirada == 5 & v.salidaAmarillo == false)
 					{
 						v.anchuraAmarillo = 480;
@@ -2349,6 +2414,15 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 							v.anchuraAmarillo = 381;
 							v.alturaAmarillo = 421;
 							v.tableroPanel.repaint();
+							v.victoriasAmarillo = v.victoriasAmarillo + 1;
+							v.dlgVictoria.setLayout(new FlowLayout());
+							v.dlgVictoria.setLocationRelativeTo(null);
+							v.dlgVictoria.setSize(300, 100);
+							v.dlgVictoria.add(v.lblVictoria);
+							v.dlgVictoria.add(v.revancha);
+							v.dlgVictoria.add(v.salir);
+							v.dlgVictoria.setResizable(false);
+							v.dlgVictoria.setVisible(true);
 							break;
 						}
 					}
@@ -2378,10 +2452,6 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				if(v.turno == 1)
 				{
 					v.resultado.setForeground(Color.red);
-					turnoRojo = true;
-					turnoAmarillo = false;
-					turnoAzul = false;
-					turnoVerde = false;
 					if(tirada == 5 & v.salidaRojo == false) 
 					{
 						v.anchuraRojo = 280;
@@ -2752,6 +2822,15 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 							v.anchuraRojo = 380;
 							v.alturaRojo = 340;
 							v.tableroPanel.repaint();
+							v.victoriasRojo = v.victoriasRojo + 1;
+							v.dlgVictoria.setLayout(new FlowLayout());
+							v.dlgVictoria.setLocationRelativeTo(null);
+							v.dlgVictoria.setSize(300, 100);
+							v.dlgVictoria.add(v.lblVictoria);
+							v.dlgVictoria.add(v.revancha);
+							v.dlgVictoria.add(v.salir);
+							v.dlgVictoria.setResizable(false);
+							v.dlgVictoria.setVisible(true);
 							break;
 						}
 					}
@@ -2778,10 +2857,6 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				else if(v.turno == 2)
 				{
 					v.resultado.setForeground(Color.blue);
-					turnoRojo = false;
-					turnoAmarillo = false;
-					turnoAzul = true;
-					turnoVerde = false;
 					if(tirada == 5 & v.salidaAzul == false)
 					{
 						v.anchuraAzul = 160;
@@ -3149,9 +3224,18 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 							v.tableroPanel.repaint();
 							break;
 						case 71:
-							v.anchuraAzul = 341;
-							v.alturaAzul = 381;
+							v.anchuraAmarillo = 381;
+							v.alturaAmarillo = 421;
 							v.tableroPanel.repaint();
+							v.victoriasAzul = v.victoriasAzul + 1;
+							v.dlgVictoria.setLayout(new FlowLayout());
+							v.dlgVictoria.setLocationRelativeTo(null);
+							v.dlgVictoria.setSize(300, 100);
+							v.dlgVictoria.add(v.lblVictoria);
+							v.dlgVictoria.add(v.revancha);
+							v.dlgVictoria.add(v.salir);
+							v.dlgVictoria.setResizable(false);
+							v.dlgVictoria.setVisible(true);
 							break;
 						}
 					}
@@ -3178,10 +3262,6 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				else if(v.turno == 3)
 				{
 					v.resultado.setForeground(Color.yellow);
-					turnoRojo = false;
-					turnoAmarillo = true;
-					turnoAzul = false;
-					turnoVerde = false;
 					if(tirada == 5 & v.salidaAmarillo == false)
 					{
 						v.anchuraAmarillo = 480;
@@ -3552,6 +3632,15 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 							v.anchuraAmarillo = 381;
 							v.alturaAmarillo = 421;
 							v.tableroPanel.repaint();
+							v.victoriasAmarillo = v.victoriasAmarillo + 1;
+							v.dlgVictoria.setLayout(new FlowLayout());
+							v.dlgVictoria.setLocationRelativeTo(null);
+							v.dlgVictoria.setSize(300, 100);
+							v.dlgVictoria.add(v.lblVictoria);
+							v.dlgVictoria.add(v.revancha);
+							v.dlgVictoria.add(v.salir);
+							v.dlgVictoria.setResizable(false);
+							v.dlgVictoria.setVisible(true);
 							break;
 						}
 					}
@@ -3578,10 +3667,6 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				else if(v.turno == 4)
 				{				
 					v.resultado.setForeground(Color.green);
-					turnoRojo = false;
-					turnoAmarillo = false;
-					turnoAzul = false;
-					turnoVerde = true;
 					if(tirada == 5 & v.salidaVerde == false)
 					{
 						v.anchuraVerde = 600;
@@ -3952,6 +4037,15 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 							v.anchuraVerde = 420;
 							v.alturaVerde = 381;
 							v.tableroPanel.repaint();
+							v.victoriasVerde = v.victoriasVerde + 1;
+							v.dlgVictoria.setLayout(new FlowLayout());
+							v.dlgVictoria.setLocationRelativeTo(null);
+							v.dlgVictoria.setSize(300, 100);
+							v.dlgVictoria.add(v.lblVictoria);
+							v.dlgVictoria.add(v.revancha);
+							v.dlgVictoria.add(v.salir);
+							v.dlgVictoria.setResizable(false);
+							v.dlgVictoria.setVisible(true);
 							break;
 						}
 					}

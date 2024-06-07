@@ -15,7 +15,7 @@ public class Modelo
 	Connection connection = null;
 	Statement statement = null;
 	ResultSet rs = null;
-	
+
 	public boolean conectar()
 	{
 		boolean conexionCorrecta = true;
@@ -41,7 +41,7 @@ public class Modelo
 		}
 		return conexionCorrecta;
 	}
-	
+
 	public String dameJugadores()
 	{
 		String contenido = "";
@@ -66,7 +66,7 @@ public class Modelo
 		}
 		return contenido;
 	}
-	
+
 	public void desconectar()
 	{
 		try
@@ -80,10 +80,10 @@ public class Modelo
 		}
 		catch(NullPointerException npe)
 		{
-			
+
 		}
 	}
-	
+
 	public int restoRojo(int metaRojo)
 	{
 		int resto;
@@ -116,12 +116,46 @@ public class Modelo
 		return metaVerde;
 	}
 
-	public void rellenarDatos(String nombreRojo, String nombreAzul, String nombreAmarillo, String nombreVerde, int victoriasRojo, int victoriasAmarillo, int victoriasAmarillo2, int victoriasVerde, int numJugadores)
+	public void rellenarDatos2(String nombreRojo, String nombreAmarillo, int victoriasRojo, int victoriasAmarillo)
 	{
-		if(numJugadores == 2)
+		String sentencia = "INSERT INTO jugadores VALUES (null, '" + nombreRojo + "', " + victoriasRojo + "), (null, '" + nombreAmarillo + "', " + victoriasAmarillo + ");";
+		try
 		{
-			
+			statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			statement.executeUpdate(sentencia);
 		}
-		
+		catch(SQLException e)
+		{
+			System.out.println("Error en la sentencia SQL:" + e.toString());
+		}
+	}
+
+	public void rellenarDatos3(String nombreRojo, String nombreAzul, String nombreAmarillo, int victoriasRojo, int victoriasAzul, int victoriasAmarillo)
+	{
+		String sentencia = "INSERT INTO jugadores VALUES (null, '" + nombreRojo + "', " + victoriasRojo + "), (null, '" + nombreAmarillo + "', " + victoriasAmarillo + "), (null, '" + nombreAzul + "', " + victoriasAzul + ");";
+		try
+		{
+			statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			statement.executeUpdate(sentencia);
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Error en la sentencia SQL:" + e.toString());
+		}
+	}
+
+
+	public void rellenarDatos4(String nombreRojo, String nombreAzul, String nombreAmarillo, String nombreVerde, int victoriasRojo, int victoriasAzul, int victoriasAmarillo, int victoriasVerde)
+	{
+		String sentencia = "INSERT INTO jugadores VALUES (null, '" + nombreRojo + "', " + victoriasRojo + "), (null, '" + nombreAmarillo + "', " + victoriasAmarillo + "), (null, '" + nombreAzul + "', " + victoriasAzul + "), (null, '" + nombreVerde + "', " + victoriasVerde + ");";
+		try
+		{
+			statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			statement.executeUpdate(sentencia);
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Error en la sentencia SQL:" + e.toString());
+		}
 	}
 }

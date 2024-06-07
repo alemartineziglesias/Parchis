@@ -28,6 +28,7 @@ public class Vista extends Frame
 	TextField nombreAzul = new TextField(20);
 	TextField nombreVerde = new TextField(20);
 	Button comenzar = new Button("Empezar");
+	Button limpiar = new Button("Limpiar");
 	Dialog dlgError = new Dialog(this, "Error", true);
 	Label lblError = new Label("");
 	Button btnError = new Button("Ok");
@@ -79,11 +80,20 @@ public class Vista extends Frame
 	int metaAzul = 0;
 	int metaAmarillo = 0;
 	int metaVerde = 0;
+	boolean avanceRojo;
+	boolean avanceAzul;
+	boolean avanceAmarillo;
+	boolean avanceVerde;
 	int victoriasRojo = 0;
 	int victoriasAzul = 0;
 	int victoriasAmarillo = 0;
 	int victoriasVerde = 0;
 	int turno = 1;
+	
+	Rectangle rectRojo = new Rectangle(anchuraRojo, alturaRojo, 40, 40);
+	Rectangle rectAzul = new Rectangle(anchuraAzul, alturaAzul, 40, 40);
+	Rectangle rectAmarillo = new Rectangle(anchuraAmarillo, alturaAmarillo, 40, 40);
+	Rectangle rectVerde = new Rectangle(anchuraVerde, alturaVerde, 40, 40);
 
 	public Vista() 
 	{
